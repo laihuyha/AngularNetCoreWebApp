@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using System.Threading.Tasks;
 namespace API
 {
     public class Program
     {
-        public static async void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
@@ -21,7 +21,8 @@ namespace API
                 {
                     var context = services.GetRequiredService<ShopContext>();
                     await context.Database.MigrateAsync();
-                    context.Database.EnsureCreated();
+                    await ShopContextSeed.SeedAsync(context, loggerFactory);
+                    // context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {
@@ -29,6 +30,7 @@ namespace API
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
             }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

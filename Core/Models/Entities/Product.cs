@@ -12,8 +12,8 @@ namespace Core.Models.Entities
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
         public ProductType Type { get; set; }
-        public ProductBrand Brand { get; set; }
         public int TypeId { get; set; }
+        public ProductBrand Brand { get; set; }
         public int BrandId { get; set; }
     }
 }

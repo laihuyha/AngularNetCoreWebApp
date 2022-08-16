@@ -12,13 +12,15 @@ namespace Infrastructure.Config
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(a=>a.Id).IsRequired();
-            builder.Property(a=>a.Name).IsRequired().HasMaxLength(100);
-            builder.Property(a=>a.Description).HasMaxLength(200);
-            builder.Property(a=>a.Price).HasColumnType("decimal(18,2)");
-            builder.Property(a=>a.ImageUrl).HasMaxLength(200);
-            builder.HasOne(a=>a.Brand).WithMany().HasForeignKey(a=>a.BrandId);
-            builder.HasOne(a=>a.Type).WithMany().HasForeignKey(a=>a.TypeId);
+            builder.Property(p => p.Id).IsRequired();
+            builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Description);
+            builder.Property(p => p.Price).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.ImageUrl).HasMaxLength(200);
+            builder.HasOne(b => b.Brand).WithMany()
+                .HasForeignKey(p => p.BrandId);
+            builder.HasOne(t => t.Type).WithMany()
+                .HasForeignKey(p => p.TypeId);
         }
     }
 }
