@@ -21,8 +21,9 @@ namespace API
                 {
                     var context = services.GetRequiredService<ShopContext>();
                     await context.Database.MigrateAsync();
+                    //Seed data to the database.
                     await ShopContextSeed.SeedAsync(context, loggerFactory);
-                    // context.Database.EnsureCreated();
+                    context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {
