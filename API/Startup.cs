@@ -25,6 +25,7 @@ namespace API
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<IBrandServices, BrandServices>();
             services.AddScoped<ITypeServices, TypeServices>();
+            services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
