@@ -14,24 +14,42 @@ namespace API.Controllers
     [Route("api/[controller]/[action]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductServices _services;
-        public ProductsController(IProductServices services)
+        private readonly IProductServices _productServices;
+        private readonly IBrandServices _brandServices;
+        private readonly ITypeServices _typeServices;
+        public ProductsController(IProductServices services, IBrandServices brandServices, ITypeServices typeServices)
         {
-            _services = services;
+            _productServices = services;
+            _brandServices = brandServices;
+            _typeServices = typeServices;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetAll()
         {
-            var products = await _services.GetAllProductsAsync();
+            var products = await _productServices.GetAllProductsAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
-            var product = await _services.GetProductByIdAsync(id);
+            var product = await _productServices.GetProductByIdAsync(id);
             return Ok(product);
+        }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<List<ProductBrand>>> GetAllBrands()
+        {
+            var brands = await _brandServices.GetAllBrands();
+            return Ok(brands);
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<List<ProductType>>> GetAllTypes()
+        {
+            var types = await _typeServices.GetAllTypes();
+            return Ok(types);
         }
     }
 }

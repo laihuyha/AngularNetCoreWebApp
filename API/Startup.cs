@@ -30,6 +30,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<IBrandServices, BrandServices>();
+            services.AddScoped<ITypeServices, TypeServices>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
