@@ -1,3 +1,4 @@
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -27,6 +28,7 @@ namespace API
             services.AddScoped<ITypeServices, TypeServices>();
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
             services.AddControllers();
+            services.AddAutoMapper(typeof(EntityAutoMapper));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
@@ -52,6 +54,8 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

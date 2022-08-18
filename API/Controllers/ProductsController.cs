@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Infrastructure.Data;
 using Core.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Core.Specifications;
+using AutoMapper;
+using Core.Models.ViewModels;
 
 namespace API.Controllers
 {
@@ -22,9 +20,12 @@ namespace API.Controllers
         private readonly IGenericServices<ProductBrand> _brandServices;
         private readonly IGenericServices<ProductType> _typeServices;
 
+        private readonly IMapper _mapper;
 
-        public ProductsController(IGenericServices<Product> productServices, IGenericServices<ProductBrand> brandServices, IGenericServices<ProductType> typeServices)
+        public ProductsController(IGenericServices<Product> productServices, IGenericServices<ProductBrand> brandServices, IGenericServices<ProductType> typeServices
+        , IMapper mapper)
         {
+            _mapper = mapper;
             _productServices = productServices;
             _brandServices = brandServices;
             _typeServices = typeServices;
@@ -44,7 +45,7 @@ namespace API.Controllers
             var spec = new ProductSpecification(id);
             // var product = await _productServices.GetById(id);
             var product = await _productServices.GetEntityWithSpec(spec);
-            return Ok(product);
+            return Ok(_mapper.Map<Product,ProductVM>(product));
         }
 
         [HttpGet("brands")]
