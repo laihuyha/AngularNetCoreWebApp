@@ -9,9 +9,7 @@ using Core.Models.ViewModels;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         // private readonly IProductServices _productServices;
         // private readonly IBrandServices _brandServices;
@@ -32,6 +30,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("all")]
         public async Task<ActionResult<List<Product>>> GetAll()
         {
             var spec = new ProductSpecification();
@@ -39,7 +38,7 @@ namespace API.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("product/{id}")]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var spec = new ProductSpecification(id);
