@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220819044440_UpdateDBClass")]
+    partial class UpdateDBClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
@@ -26,12 +28,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
+                    b.Property<string>("CreateDate")
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedDate")
-                        .HasMaxLength(20)
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -58,12 +60,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("TypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
+                    b.Property<string>("UpdateDate")
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedDate")
-                        .HasMaxLength(20)
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -81,10 +83,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreateDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedDate")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("IsActive")
@@ -93,10 +95,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdateDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedDate")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -110,10 +112,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("CreateDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedDate")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("IsActive")
@@ -122,10 +124,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("UpdateDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedDate")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

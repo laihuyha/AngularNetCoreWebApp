@@ -13,5 +13,11 @@ namespace Core.Models.ViewModels
         public ProductBrand Brand { get; set; }
         // public string Type { get; set; }
         // public string Brand { get; set; }
+        public int Stock { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public string CreateDate { get; set; }
+        public string UpdateDate { get; set; }
+        public int IsActive { get; set; }
     }
 }

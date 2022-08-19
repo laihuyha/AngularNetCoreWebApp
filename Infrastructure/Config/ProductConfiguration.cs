@@ -17,6 +17,11 @@ namespace Infrastructure.Config
                 .HasForeignKey(p => p.BrandId);
             builder.HasOne(t => t.Type).WithMany()
                 .HasForeignKey(p => p.TypeId);
+            builder.Property(p => p.Stock).HasColumnType("int");
+            builder.Property(p=>p.CreatedBy).HasMaxLength(64);
+            builder.Property(p=>p.UpdatedBy).HasMaxLength(64);
+            builder.Property(p=>p.CreatedDate).HasMaxLength(20);
+            builder.Property(p=>p.UpdatedDate).HasMaxLength(20);
         }
     }
 }

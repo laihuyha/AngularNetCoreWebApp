@@ -1,18 +1,38 @@
 [
   {
     "Id": 1,
+    "CreatedDate": "20190101",
+    "CreatedBy": "Unknown",
+    "UpdatedDate": "20190102",
+    "UpdatedBy": "Unknown",
+    "IsActive": 1,
     "Name": "Boards"
   },
   {
     "Id": 2,
+    "CreatedDate": "20190101",
+    "CreatedBy": "Unknown",
+    "UpdatedDate": "20190102",
+    "UpdatedBy": "Unknown",
+    "IsActive": 1,
     "Name": "Hats"
   },
   {
     "Id": 3,
+    "CreatedDate": "20190101",
+    "CreatedBy": "Unknown",
+    "UpdatedDate": "20190102",
+    "UpdatedBy": "Unknown",
+    "IsActive": 1,
     "Name": "Boots"
   },
   {
     "Id": 4,
+    "CreatedDate": "20190101",
+    "CreatedBy": "Unknown",
+    "UpdatedDate": "20190102",
+    "UpdatedBy": "Unknown",
+    "IsActive": 1,
     "Name": "Gloves"
   }
 ]

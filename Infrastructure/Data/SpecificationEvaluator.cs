@@ -10,10 +10,19 @@ namespace Infrastructure.Data
         public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inpQuery, ISpecifications<TEntity> spec)
         {
             var query = inpQuery;
-            if(spec.Criteria != null){
+            if (spec.Criteria != null)
+            {
                 query = query.Where(spec.Criteria);
             }
-            query = spec.Include.Aggregate(query,(current,include) => current.Include(include));
+            if (spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            if (spec.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+            query = spec.Include.Aggregate(query, (current, include) => current.Include(include));
             return query;
         }
     }

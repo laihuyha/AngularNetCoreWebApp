@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<List<Product>>> GetAll()
+        public async Task<ActionResult<List<Product>>> GetAll(string sort)
         {
             var spec = new ProductSpecification();
             var products = await _productServices.ListSpecAsync(spec);
@@ -46,7 +46,6 @@ namespace API.Controllers
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var spec = new ProductSpecification(id);
-            // var product = await _productServices.GetById(id);
             var product = await _productServices.GetEntityWithSpec(spec);
             return Ok(_mapper.Map<Product, ProductVM>(product));
         }
