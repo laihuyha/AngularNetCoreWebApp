@@ -22,9 +22,10 @@ namespace Core.Specifications
 
 
         public ProductSpecification(ProductSpecParam parameter, bool IsOrderAndPaging) : base(
-            x => (!parameter.brandId.HasValue || x.BrandId == parameter.brandId)
-             && (!parameter.typeId.HasValue || x.TypeId == parameter.typeId)
-             && (string.IsNullOrEmpty(parameter.searchText) || x.Name.Contains(parameter.searchText)))
+
+            x => ((string.IsNullOrEmpty(parameter.searchText) || x.Name.ToLower().Contains(parameter.searchText.ToLower())))
+            && (!parameter.brandId.HasValue || x.BrandId == parameter.brandId)
+            && (!parameter.typeId.HasValue || x.TypeId == parameter.typeId))
         {
             AddInclude(x => x.Type);
             AddInclude(x => x.Brand);
