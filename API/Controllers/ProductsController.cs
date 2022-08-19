@@ -33,9 +33,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<List<Product>>> GetAll(string sort)
+        public async Task<ActionResult<List<Product>>> GetAll([FromQuery]ProductSpecParam Params)
         {
-            var spec = new ProductSpecification();
+            var spec = new ProductSpecification(Params);
             var products = await _productServices.ListSpecAsync(spec);
             return Ok(products);
         }

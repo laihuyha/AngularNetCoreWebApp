@@ -10,11 +10,30 @@ namespace Core.Specifications
             AddInclude(x => x.Brand);
         }
 
-        public ProductSpecification(string filter)
+        public ProductSpecification(ProductSpecParam parameter) : base(
+            x => (!parameter.brandId.HasValue || x.BrandId == parameter.brandId)
+             && (!parameter.typeId.HasValue || x.TypeId == parameter.typeId)
+             && (string.IsNullOrEmpty(parameter.searchText) || x.Name.Contains(parameter.searchText)))
         {
             AddInclude(x => x.Type);
             AddInclude(x => x.Brand);
             AddOrderBy(x => x.Name);
+            ApplyPaging(parameter.pageSize * (parameter.pageIndex - 1), parameter.pageSize);
+            if (!string.IsNullOrEmpty(parameter.sort))
+            {
+                switch (parameter.sort)
+                {
+                    case "priceAsc":
+                        AddOrderBy(x => x.Price);
+                        break;
+                    case "priceDesc":
+                        AddOrderByDescending(x => x.Price);
+                        break;
+                    default:
+                        AddOrderBy(x => x.Name);
+                        break;
+                }
+            }
         }
 
         /// <summary>
