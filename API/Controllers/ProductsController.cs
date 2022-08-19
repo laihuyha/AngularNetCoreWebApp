@@ -6,6 +6,8 @@ using Core.Interfaces;
 using Core.Specifications;
 using AutoMapper;
 using Core.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -39,12 +41,14 @@ namespace API.Controllers
         }
 
         [HttpGet("product/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(APIMessageResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             var spec = new ProductSpecification(id);
             // var product = await _productServices.GetById(id);
             var product = await _productServices.GetEntityWithSpec(spec);
-            return Ok(_mapper.Map<Product,ProductVM>(product));
+            return Ok(_mapper.Map<Product, ProductVM>(product));
         }
 
         [HttpGet("brands")]

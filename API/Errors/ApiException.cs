@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace API.Errors
 {
     public class ApiException : APIMessageResponse
