@@ -8,6 +8,7 @@ using AutoMapper;
 using Core.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using API.Errors;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -33,11 +34,15 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<List<Product>>> GetAll([FromQuery]ProductSpecParam Params)
+        public async Task<ActionResult<Pagination<Product>>> GetAll([FromQuery] ProductSpecParam Params)
         {
-            var spec = new ProductSpecification(Params);
+            var spec = new ProductSpecification(Params, true);
             var products = await _productServices.ListSpecAsync(spec);
-            return Ok(products);
+
+            var countSpec = new ProductSpecification(Params, false);
+            var count = await _productServices.CountAsync(countSpec);
+
+            return Ok(new Pagination<Product>(Params.pageIndex, Params.pageSize, count, products));
         }
 
         [HttpGet("product/{id}")]

@@ -18,6 +18,11 @@ namespace Infrastructure.Services
             _context = context;
         }
 
+        public async Task<int> CountAsync(ISpecifications<T> spec)
+        {
+            return await ApplySpec(spec).CountAsync();
+        }
+
         public Task<T> Create(T entity)
         {
             // var res = await _context.Set<T>().AddAsync(entity);
@@ -55,7 +60,8 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        private IQueryable<T> ApplySpec(ISpecifications<T> spec){
+        private IQueryable<T> ApplySpec(ISpecifications<T> spec)
+        {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
     }
