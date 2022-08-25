@@ -43,13 +43,15 @@ body {
 }
 
 .header2 .h2-nav .navbar-nav .nav-item .nav-link {
-  padding: 12px 0px;
+  padding: 12px 10px;
   color: #ffffff;
   font-weight: 400;
+  border-radius: 10px;
 }
 
 .header2 .h2-nav .navbar-nav .nav-item .nav-link:hover {
   color: #263238;
+  background-color: linen;
 }
 
 .header2 .h2-nav .navbar-nav .nav-item {
