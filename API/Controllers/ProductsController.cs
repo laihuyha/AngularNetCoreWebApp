@@ -9,6 +9,7 @@ using Core.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using API.Errors;
 using API.Helpers;
+using System;
 
 namespace API.Controllers
 {
@@ -42,7 +43,9 @@ namespace API.Controllers
             var countSpec = new ProductSpecification(Params, false);
             var count = await _productServices.CountAsync(countSpec);
 
-            return Ok(new Pagination<Product>(Params.pageIndex, Params.pageSize, count, products));
+            var pageCount = (int)Math.Ceiling((double)count / Params.pageSize);
+
+            return Ok(new Pagination<Product>(Params.pageIndex, Params.pageSize, pageCount, count, products));
         }
 
         [HttpGet("product/{id}")]
