@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Brand } from '../share/models/brands';
 import { IPagination } from '../share/models/pagination';
 import { Type } from '../share/models/types';
@@ -12,9 +13,33 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProducts() {
-    var products = this.http.get<IPagination>(this.baseUrl + 'Products/all?pageIndex=1&pageSize=9');
-    return products;
+  getAllProducts(brandId?: number, typeId?: number, sort?: string, pageIndex?: number, pageSize?: number, searchText?: string) {
+    let param = new HttpParams();
+    if (brandId) {
+      param = param.append('brandId', brandId.toString());
+    }
+    if (typeId) {
+      param = param.append('typeId', typeId.toString());
+    }
+    if (sort) {
+      param = param.append('sort', sort);
+    }
+    if (pageIndex) {
+      param = param.append('pageIndex', pageIndex.toString());
+    }
+    if (pageSize) {
+      param = param.append('pageSize', pageSize.toString());
+    }
+    if (searchText) {
+      param = param.append('searchText', searchText);
+    }
+
+    var products = this.http.get<IPagination>(this.baseUrl + 'Products/all', { observe: 'response', params: param });
+    return products.pipe(
+      map(response => {
+        return response.body;
+      })
+    );
   }
 
   getAllBrands() {

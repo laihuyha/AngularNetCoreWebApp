@@ -5,14 +5,24 @@
         <h3 class="agileits-sear-head mb-3">Brands</h3>
         <hr />
         <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
-          <app-side-brands-filter [brand]="brand"></app-side-brands-filter>
+          <app-side-brands-filter
+            [brand]="brand"
+            [class.active]="brand.id === this.selectedBrandId"
+            [value]="brand.id"
+            (change)="onBrandSelected(brand.id)"
+          ></app-side-brands-filter>
         </ul>
       </div>
       <div class="container">
         <h3 class="agileits-sear-head mb-3">Types</h3>
         <hr />
-        <ul class="list-group ul-checkbox" *ngFor="let type of listBrands">
-          <app-side-types-filter [type]="type"></app-side-types-filter>
+        <ul class="list-group ul-checkbox" *ngFor="let type of listTypes">
+          <app-side-types-filter
+            [type]="type"
+            [class.active]="type.id === this.selectedTypeId"
+            [value]="type.id"
+            (change)="onTypeSelected(type.id)"
+          ></app-side-types-filter>
         </ul>
       </div>
     </section>

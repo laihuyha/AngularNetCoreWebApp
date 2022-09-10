@@ -1,9 +1,9 @@
 export interface Brand {
     id: number;
     name: string;
-    createdDate: string;
-    createdBy: string;
+    createdDate?: string;
+    createdBy?: string;
     isActive: number;
-    updatedDate: string;
-    updatedBy: string;
+    updatedDate?: string;
+    updatedBy?: string;
 }
