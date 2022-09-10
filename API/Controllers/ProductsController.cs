@@ -35,7 +35,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<Pagination<Product>>> GetAll([FromQuery] ProductSpecParam Params)
+        public async Task<ActionResult<Pagination<ProductVM>>> GetAll([FromQuery] ProductSpecParam Params)
         {
             var spec = new ProductSpecification(Params, true);
             var products = await _productServices.ListSpecAsync(spec);
@@ -45,13 +45,13 @@ namespace API.Controllers
 
             var pageCount = (int)Math.Ceiling((double)count / Params.pageSize);
 
-            return Ok(new Pagination<Product>(Params.pageIndex, Params.pageSize, pageCount, count, products));
+            return Ok(new Pagination<ProductVM>(Params.pageIndex, Params.pageSize, pageCount, count, _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductVM>>(products)));
         }
 
         [HttpGet("product/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIMessageResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetProductById(int id)
+        public async Task<ActionResult<ProductVM>> GetProductById(int id)
         {
             var spec = new ProductSpecification(id);
             var product = await _productServices.GetEntityWithSpec(spec);

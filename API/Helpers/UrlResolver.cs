@@ -5,29 +5,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {
-    public class UrlResolver
+    public class UrlResolver : IValueResolver<Product, ProductVM, string>
     {
-        public UrlResolver()
+        private readonly IConfiguration _config;
+
+        public UrlResolver(IConfiguration config)
         {
+            _config = config;
         }
 
-        public class ProductResolver : IValueResolver<Product, ProductVM, string>
+        public string Resolve(Product source, ProductVM destination, string destMember, ResolutionContext context)
         {
-            private readonly IConfiguration _configuration;
-            public ProductResolver(IConfiguration configuration)
+            if (!string.IsNullOrEmpty(source.ImageUrl))
             {
-                _configuration = configuration;
+                return _config["ApiUrl"] + source.ImageUrl;
             }
-
-            public string Resolve(Product source, ProductVM destination, string destMember, ResolutionContext context)
-            {
-                if (!string.IsNullOrEmpty(source.ImageUrl))
-                {
-                    //Get APIUrl in appsetting.json and append it with image url
-                    return _configuration["APIUrl"] + source.ImageUrl;
-                }
-                return null;
-            }
+            return null;
         }
     }
 }
