@@ -1,3 +1,5 @@
+import { Brand } from "./brands";
+import { Type } from "./types";
 export interface IProduct {
     id: number;
     createdBy: string;
@@ -14,24 +16,4 @@ export interface IProduct {
     brand: Brand;
     brandId: number;
     stock: number;
-}
-
-export interface Type {
-    id: number;
-    createdBy: string;
-    createdDate: string;
-    updatedBy: string;
-    updatedDate: string;
-    isActive: number;
-    name: string;
-}
-
-export interface Brand {
-    id: number;
-    createdBy: string;
-    createdDate: string;
-    updatedBy: string;
-    updatedDate: string;
-    isActive: number;
-    name: string;
 }

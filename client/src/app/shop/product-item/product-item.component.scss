@@ -1,0 +1,41 @@
+.card {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.add-button {
+  height: 20px;
+}
+.buy-button {
+  height: 30px;
+}
+.img-fluid {
+  background-color: burlywood;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.producct-desc {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10em;
+}
+.product-name {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10em;
+  cursor: pointer;
+  text-decoration: none;
+  color: #262626;
+}
+
+.btn-outline-buynow {
+  color: black;
+  border: 0.5px solid #ff8533;
+}
+.btn-outline-buynow:hover {
+  color: white;
+  background-color: #ff8533;
+  border: 0.5px solid #ff8533;
+}

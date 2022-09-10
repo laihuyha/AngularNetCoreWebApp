@@ -1,5 +1,44 @@
-<ul style="margin-top: 120px;">
-  <li class="list-unstyled" *ngFor="let product of productList">
-    {{ product.name }}
-  </li>
-</ul>
+<div class="container" style="margin-top: 120px">
+  <div class="row">
+    <section class="col-md-3 filter-sidebar">
+      <div class="container">
+        <h3 class="agileits-sear-head mb-3">Brands</h3>
+        <hr />
+        <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
+          <app-side-brands-filter [brand]="brand"></app-side-brands-filter>
+        </ul>
+      </div>
+      <div class="container">
+        <h3 class="agileits-sear-head mb-3">Types</h3>
+        <hr />
+        <ul class="list-group ul-checkbox" *ngFor="let type of listBrands">
+          <app-side-types-filter [type]="type"></app-side-types-filter>
+        </ul>
+      </div>
+    </section>
+
+    <section class="col-md-9">
+      <div class="d-flex justify-content-between align-item-center pb-2">
+        <div class="input-group custom-search-form">
+          <select class="me-2">
+            <option value="1">Price: Low to High</option>
+            <option value="2">Price: High to Low</option>
+          </select>
+          <input type="text" class="form-control" placeholder="Search" />
+          <span class="input-group-btn me-1">
+            <button class="btn btn-outline-success" type="button">
+              <span class="fa-solid fa-magnifying-glass"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let product of productList">
+          <!-- //Product -->
+          <app-product-item [product]="product"></app-product-item>
+          <!-- //End Product -->
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

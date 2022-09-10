@@ -1,0 +1,224 @@
+body {
+  background-color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.product-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.mb-30 {
+  margin-bottom: 30px !important;
+}
+
+.product-badge {
+  position: absolute;
+  height: 24px;
+  padding: 0 14px;
+  border-radius: 3px;
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 24px;
+  white-space: nowrap;
+  top: 12px;
+  left: 12px;
+}
+
+.bg-secondary {
+  background-color: #dc3545 !important;
+}
+
+.bg-success {
+  background-color: #21bd4a !important;
+}
+
+.product-thumb > img {
+  display: block;
+  width: 100%;
+  height: 300px;
+  padding: 14px;
+}
+
+.product-category {
+  width: 100%;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.product-card-body {
+  padding: 18px;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.product-category > a {
+  transition: color 0.2s;
+  color: #999;
+  text-decoration: none;
+}
+
+.product-title {
+  margin-bottom: 18px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.product-title > a {
+  transition: color 0.3s;
+  color: #232323;
+  text-decoration: none;
+}
+
+.product-price {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 9px 15px;
+  border-radius: 4px;
+  background-color: #3ba9fc;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.product-button-group {
+  display: table;
+  width: 100%;
+  border-top: 1px solid #e5e5e5;
+  table-layout: fixed;
+}
+
+.product-button-group a:hover {
+  color: #3ba9fc;
+}
+
+.product-button:first-child {
+  border-bottom-left-radius: 5px;
+}
+
+.product-button {
+  display: table-cell;
+  position: relative;
+  height: 62px;
+  padding: 10px;
+  transition: background-color 0.3s;
+  border: 0;
+  border-right: 1px solid #e5e5e5;
+  background: none;
+  color: #505050;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+}
+
+.product-button:hover > span {
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.product-button > span {
+  display: block;
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  width: 100%;
+  -webkit-transform: translateY(12px);
+  -ms-transform: translateY(12px);
+  transform: translateY(12px);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.product-button > i,
+.product-button > span {
+  transition: all 0.3s;
+}
+
+.product-button > i {
+  display: inline-block;
+  position: relative;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.product-button:hover > i {
+  -webkit-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+.custom-search-form {
+  margin-top: 25px;
+}
+.custom-search-form > select {
+  width: 20%;
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #232323;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.custom-search-form > input {
+  width: 60%;
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #232323;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-transition: border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ul-checkbox {
+  display: block;
+  list-style-type: none;
+}
+
+.ul-checkbox > li {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 6px;
+}
+.ul-checkbox > li > span {
+  margin-left: 10px;
+}
+.filter-sidebar {
+  display: block;
+  margin-top: 4vh;
+  background-color: lavender;
+}
+.filter-sidebar .container {
+  margin: 2vh 0px;
+}
