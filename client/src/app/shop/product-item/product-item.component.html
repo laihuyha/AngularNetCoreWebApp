@@ -11,6 +11,7 @@
     <p class="card-text text-muted producct-desc">
       {{ product.description }}
     </p>
+    <p class="text-muted">Price: {{ product.price | currency : "VND":"symbol":".0-3":"vi" }}</p>
     <div class="">
       <div>
         <button type="button" class="btn btn-sm btn-outline-primary fa fa-shopping-cart add-button">

@@ -72,5 +72,10 @@ export class ShopComponent implements OnInit {
     this.selectedTypeId = typeId;
     this.loadProducts();
   }
+
+  onSortSelected(sort: string) {
+    this.sort = sort;
+    this.loadProducts();
+  }
   //#endregion
 }
