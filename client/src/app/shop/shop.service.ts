@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Brand } from '../share/models/brands';
 import { IPagination } from '../share/models/pagination';
 import { Type } from '../share/models/types';
+import { ShopRequest } from '../share/RequestParam/ShopRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,25 +14,25 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProducts(brandId?: number, typeId?: number, sort?: string, pageIndex?: number, pageSize?: number, searchText?: string) {
+  getAllProducts(request: ShopRequest) {
     let param = new HttpParams();
-    if (brandId) {
-      param = param.append('brandId', brandId.toString());
+    if (request.brandId) {
+      param = param.append('brandId', request.brandId.toString());
     }
-    if (typeId) {
-      param = param.append('typeId', typeId.toString());
+    if (request.typeId) {
+      param = param.append('typeId', request.typeId.toString());
     }
-    if (sort) {
-      param = param.append('sort', sort);
+    if (request.sort) {
+      param = param.append('sort', request.sort);
     }
-    if (pageIndex) {
-      param = param.append('pageIndex', pageIndex.toString());
+    if (request.pageIndex) {
+      param = param.append('pageIndex', request.pageIndex.toString());
     }
-    if (pageSize) {
-      param = param.append('pageSize', pageSize.toString());
+    if (request.pageSize) {
+      param = param.append('pageSize', request.pageSize.toString());
     }
-    if (searchText) {
-      param = param.append('searchText', searchText);
+    if (request.searchText) {
+      param = param.append('searchText', request.searchText);
     }
 
     var products = this.http.get<IPagination>(this.baseUrl + 'Products/all', { observe: 'response', params: param });

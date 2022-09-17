@@ -6,6 +6,7 @@ import { registerLocaleData } from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
 import { SideBrandsFilterComponent } from '../core/side-brands-filter/side-brands-filter.component';
 import { SideTypesFilterComponent } from '../core/side-types-filter/side-types-filter.component';
+import { ShareModule } from '../share/share.module';
 registerLocaleData(localeVi, 'vi');
 
 
@@ -17,7 +18,8 @@ registerLocaleData(localeVi, 'vi');
     SideTypesFilterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ShareModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'vi' }],
   exports: [ShopComponent]

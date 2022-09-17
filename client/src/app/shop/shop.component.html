@@ -7,7 +7,7 @@
         <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
           <app-side-brands-filter
             [brand]="brand"
-            [class.active]="brand.id === this.selectedBrandId"
+            [class.active]="brand.id === this.shopParams.brandId"
             [value]="brand.id"
             (change)="onBrandSelected(brand.id)"
           ></app-side-brands-filter>
@@ -19,7 +19,7 @@
         <ul class="list-group ul-checkbox" *ngFor="let type of listTypes">
           <app-side-types-filter
             [type]="type"
-            [class.active]="type.id === this.selectedTypeId"
+            [class.active]="type.id === this.shopParams.typeId"
             [value]="type.id"
             (change)="onTypeSelected(type.id)"
           ></app-side-types-filter>
@@ -27,7 +27,7 @@
       </div>
     </section>
 
-    <section class="col-md-9">
+    <section class="col-md-9 product-sidebar">
       <div class="d-flex justify-content-between align-item-center pb-2">
         <div class="input-group custom-search-form">
           <select class="me-2" (change)="onSortSelected($event.target.value)">
@@ -35,20 +35,46 @@
             <option value="priceAsc">Price: Low to High</option>
             <option value="priceDesc">Price: High to Low</option>
           </select>
-          <input type="text" class="form-control" placeholder="Search" />
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Search"
+            id="searchText"
+            [value]=""
+            (search)="onSearch($event.target.value)"
+            (input)="onInputText($event.target.value)"
+          />
           <span class="input-group-btn me-1">
-            <button class="btn btn-outline-success" type="button">
+            <button
+              class="btn btn-outline-success"
+              type="button"
+              (click)="onSearch(textInput)"
+            >
               <span class="fa-solid fa-magnifying-glass"></span>
             </button>
           </span>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="count && count > 0">
         <div class="col-md-4" *ngFor="let product of productList">
           <!-- //Product -->
           <app-product-item [product]="product"></app-product-item>
           <!-- //End Product -->
         </div>
+      </div>
+      <div class="row" *ngIf="count == 0">
+        <span *ngIf="count == 0"
+          ><p class="h2 justify-content-center text-center">
+            There's no Product
+          </p>
+        </span>
+      </div>
+      <div class="row mt-3">
+        <app-pager-component
+          [count]="this.count"
+          [pageSize]="this.shopParams.pageSize"
+          (pageChanged)="onPageChange($event)"
+        ></app-pager-component>
       </div>
     </section>
   </div>

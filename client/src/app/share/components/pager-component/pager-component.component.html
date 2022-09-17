@@ -1,0 +1,13 @@
+<pagination
+  *ngIf="count > 0"
+  class="justify-content-center"
+  [boundaryLinks]="true"
+  [totalItems]="this.count"
+  previousText="&lsaquo;"
+  nextText="&rsaquo;"
+  firstText="&laquo;"
+  lastText="&raquo;"
+  [itemsPerPage]="this.pageSize"
+  (pageChanged)="onPagerChanged($event)"
+>
+</pagination>

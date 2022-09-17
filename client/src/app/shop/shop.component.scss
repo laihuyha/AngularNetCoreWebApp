@@ -215,9 +215,10 @@ body {
   margin-left: 10px;
 }
 .filter-sidebar {
-  display: block;
+  display: inline-block;
   margin-top: 4vh;
   background-color: lavender;
+  height: 140vh;
 }
 .filter-sidebar .container {
   margin: 2vh 0px;
