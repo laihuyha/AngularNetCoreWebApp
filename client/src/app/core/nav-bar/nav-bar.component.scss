@@ -129,3 +129,9 @@ body {
     background-position: 0% 50%;
   }
 }
+a {
+  &.active {
+    background-color: darkkhaki;
+    color: #263238;
+  }
+}
