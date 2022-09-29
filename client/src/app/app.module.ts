@@ -19,7 +19,7 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     FontAwesomeModule,
     HttpClientModule,
-    ShopModule
+    ShopModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

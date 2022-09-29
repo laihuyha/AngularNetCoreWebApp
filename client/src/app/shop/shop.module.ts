@@ -9,6 +9,7 @@ import { SideTypesFilterComponent } from '../core/side-types-filter/side-types-f
 import { ShareModule } from '../share/share.module';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { RouterModule } from '@angular/router';
+import { ShopRoutingModule } from './shop-routing.module';
 registerLocaleData(localeVi, 'vi');
 
 
@@ -23,9 +24,10 @@ registerLocaleData(localeVi, 'vi');
   imports: [
     CommonModule,
     ShareModule,
-    RouterModule
+    // RouterModule
+    ShopRoutingModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'vi' }],
-  exports: [ShopComponent]
+  // exports: [ShopComponent]
 })
 export class ShopModule { }
