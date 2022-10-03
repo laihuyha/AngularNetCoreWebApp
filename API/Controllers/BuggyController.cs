@@ -42,15 +42,12 @@ namespace API.Controllers
         public ActionResult GetServerError()
         {
             var thing = context.Products.Find(42);
-            if (thing == null)
-            {
-                return Ok(new APIMessageResponse(500));
-            }
+            var thingToReturn = thing.ToString();
             return Ok();
         }
 
-        [HttpGet("NullRef")]
-        public ActionResult GetNullRef()
+        [HttpGet("NullRef/{id}")]
+        public ActionResult GetNullRef(int id)
         {
             var thing = context.Products.Find(42);
             var x = thing.ToString();

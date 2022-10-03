@@ -55,6 +55,10 @@ namespace API.Controllers
         {
             var spec = new ProductSpecification(id);
             var product = await _productServices.GetEntityWithSpec(spec);
+            if (product == null)
+            {
+                return NotFound(new APIMessageResponse(404));
+            }
             return Ok(_mapper.Map<Product, ProductVM>(product));
         }
 
