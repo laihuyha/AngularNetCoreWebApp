@@ -23,10 +23,10 @@ namespace Infrastructure.Services
             return await ApplySpec(spec).CountAsync();
         }
 
-        public Task<T> Create(T entity)
+        public async Task<T> Create(T entity)
         {
-            // var res = await _context.Set<T>().AddAsync(entity);
-            // _context.SaveChanges();
+            var res = await _context.Set<T>().AddAsync(entity);
+            _context.SaveChanges();
             return null;
         }
 
