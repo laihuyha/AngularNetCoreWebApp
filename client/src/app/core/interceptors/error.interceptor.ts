@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.toaster.error(error.error.message, error.error.statusCode);
         }
         if (error.status === 400) {
-          this.toaster.error(error.error.message, error.error.statusCode);
+          this.toaster.error(error.error.message ?? error.error.title, error.error.statusCode);
         }
         if (error.status === 404) {
           this.router.navigateByUrl('/not-found');

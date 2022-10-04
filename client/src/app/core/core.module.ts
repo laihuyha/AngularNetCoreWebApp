@@ -16,9 +16,14 @@ import { ToastrModule } from 'ngx-toastr';
     RouterModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
-      preventDuplicates: true,
       closeButton: true,
-      
+      timeOut: 2000,
+      easing: 'ease-in-out',
+      easeTime: 1000,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      // enableHtml: true,
+      newestOnTop: true,
     })
   ],
   exports: [NavBarComponent]
