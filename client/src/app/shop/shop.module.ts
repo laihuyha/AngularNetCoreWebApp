@@ -1,15 +1,13 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ShopComponent } from './shop.component';
-import { ProductItemComponent } from './product-item/product-item.component';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { SideBrandsFilterComponent } from '../core/side-brands-filter/side-brands-filter.component';
 import { SideTypesFilterComponent } from '../core/side-types-filter/side-types-filter.component';
 import { ShareModule } from '../share/share.module';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { RouterModule } from '@angular/router';
+import { ProductItemComponent } from './product-item/product-item.component';
 import { ShopRoutingModule } from './shop-routing.module';
+import { ShopComponent } from './shop.component';
 registerLocaleData(localeVi, 'vi');
 
 
