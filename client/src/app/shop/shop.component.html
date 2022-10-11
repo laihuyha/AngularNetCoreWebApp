@@ -1,34 +1,39 @@
 <div class="container">
   <div class="row">
-    <section class="col-md-3 filter-sidebar">
-      <div class="container">
-        <h3 class="agileits-sear-head mb-3">Brands</h3>
-        <hr />
-        <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
-          <app-side-brands-filter
-            [brand]="brand"
-            [class.active]="brand.id === this.shopParams.brandId"
-            [value]="brand.id"
-            (change)="onBrandSelected(brand.id)"
-          ></app-side-brands-filter>
-        </ul>
-      </div>
-      <div class="container">
-        <h3 class="agileits-sear-head mb-3">Types</h3>
-        <hr />
-        <ul class="list-group ul-checkbox" *ngFor="let type of listTypes">
-          <app-side-types-filter
-            [type]="type"
-            [class.active]="type.id === this.shopParams.typeId"
-            [value]="type.id"
-            (change)="onTypeSelected(type.id)"
-          ></app-side-types-filter>
-        </ul>
-      </div>
-    </section>
+    <ng-container *ngIf="listTypes && listBrands">
+      <section class="col-md-3 filter-sidebar">
+        <div class="container">
+          <h3 class="agileits-sear-head mb-3">Brands</h3>
+          <hr />
+          <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
+            <app-side-brands-filter
+              [brand]="brand"
+              [class.active]="brand.id === this.shopParams.brandId"
+              [value]="brand.id"
+              (change)="onBrandSelected(brand.id)"
+            ></app-side-brands-filter>
+          </ul>
+        </div>
+        <div class="container">
+          <h3 class="agileits-sear-head mb-3">Types</h3>
+          <hr />
+          <ul class="list-group ul-checkbox" *ngFor="let type of listTypes">
+            <app-side-types-filter
+              [type]="type"
+              [class.active]="type.id === this.shopParams.typeId"
+              [value]="type.id"
+              (change)="onTypeSelected(type.id)"
+            ></app-side-types-filter>
+          </ul>
+        </div>
+      </section>
+    </ng-container>
 
     <section class="col-md-9 product-sidebar">
-      <div class="d-flex justify-content-between align-item-center pb-2">
+      <div
+        class="d-flex justify-content-between align-item-center pb-2"
+        *ngIf="productList"
+      >
         <div class="input-group custom-search-form">
           <select class="me-2" (change)="onSortSelected($event.target.value)">
             <option value="name">By Name</option>
@@ -64,16 +69,17 @@
       </div>
       <div class="row" *ngIf="count == 0">
         <span *ngIf="count == 0"
-          ><p class="h2 justify-content-center text-center">
+          ><p class="h2 justify-content-center text-center align-item-center">
             There's no Product
           </p>
         </span>
       </div>
-      <div class="row mt-3">
+      <div class="row mt-3 text-center">
         <app-pager-component
           [count]="this.count"
           [pageSize]="this.shopParams.pageSize"
           (pageChanged)="onPageChange($event)"
+          class="ml-3"
         ></app-pager-component>
       </div>
     </section>
