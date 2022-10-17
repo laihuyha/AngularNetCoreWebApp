@@ -26,6 +26,7 @@ namespace API.Extensions
                     return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = errors });
                 };
             });
+            services.AddScoped<ICart, Cart>();
             return services;
         }
     }
