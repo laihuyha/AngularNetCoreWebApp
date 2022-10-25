@@ -12,6 +12,7 @@ namespace API.Extensions
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
             services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<ICart, Cart>();
             services.AddScoped<IBrandServices, BrandServices>();
             services.AddScoped<ITypeServices, TypeServices>();
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
@@ -26,7 +27,6 @@ namespace API.Extensions
                     return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = errors });
                 };
             });
-            services.AddScoped<ICart, Cart>();
             return services;
         }
     }
