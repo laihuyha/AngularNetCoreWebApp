@@ -14,6 +14,9 @@ const routes: Routes = [
     path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule), data: { breadcrumb: 'Shop' }
   }, // This mean lazy loading
   // { path: 'shop/:id', component: ProductDetailComponent },
+  {
+    path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule), data: { breadcrumb: 'Cart' }
+  },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
 
