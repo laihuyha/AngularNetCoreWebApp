@@ -26,6 +26,7 @@ export class BasketService {
 
   setCart(cart: ICart) {
     return this.client.post(this.baseUrl + 'basket', cart).subscribe((response: ICart) => {
+      console.log(response);
       this.cartSource.next(response);
     }, error => {
       console.log(error);
@@ -40,6 +41,7 @@ export class BasketService {
     const itemToAdd: ICartItem = this.mapProductItemToCart(item, quantity);
     const cart = this.getCurrentCart() ?? this.createCart();
     // cart.items.push(itemToAdd);
+    console.log(cart);
     const index = cart.items.findIndex(x => x.id === itemToAdd.id);
     if (index === -1) {
       cart.items.push(itemToAdd);
@@ -59,8 +61,8 @@ export class BasketService {
       price: item.price,
       quantity,
       pictureUrl: item.imageUrl,
-      brand: item.brandId.toString(),
-      type: item.typeId.toString()
+      brand: JSON.stringify(item.brandId),
+      type: JSON.stringify(item.typeId)
     }
   }
 
