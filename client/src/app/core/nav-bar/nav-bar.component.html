@@ -113,12 +113,16 @@
       <div>
         <ul class="navbar-nav col-md-2">
           <li class="nav-item position-relative">
-            <a routerLink="/basket" class="nav-link">
+            <a
+              routerLink="/basket"
+              class="nav-link"
+              *ngIf="cart$ | async as cart"
+            >
               <i class="fa-solid fa-cart-shopping"></i>
               <span
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               >
-                9+
+                {{ cart?.items?.length <= 9 ? cart?.items?.length : "9+" }}
               </span>
             </a>
           </li>

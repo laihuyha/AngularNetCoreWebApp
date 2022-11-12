@@ -15,17 +15,25 @@ export class BasketService {
 
   constructor(private client: HttpClient) { }
 
+  // Comming soon need AuthController
+  getCurrentUserName() {
+    // return this.client.get(this.baseUrl + 'account').subscribe((response: any) => { }, error => {
+    //   console.log(error);
+    // });
+  }
+
   getCart(id: string) {
-    return this.client.get(this.baseUrl + 'basket?id=' + id)
+    return this.client.get(this.baseUrl + 'Cart?id=' + id)
       .pipe(
         map((cart: ICart) => {
           this.cartSource.next(cart);
+          console.log(this.getCurrentCart());
         })
       );
   }
 
   setCart(cart: ICart) {
-    return this.client.post(this.baseUrl + 'basket', cart).subscribe((response: ICart) => {
+    return this.client.post(this.baseUrl + 'Cart', cart).subscribe((response: ICart) => {
       console.log(response);
       this.cartSource.next(response);
     }, error => {
@@ -41,17 +49,19 @@ export class BasketService {
     const itemToAdd: ICartItem = this.mapProductItemToCart(item, quantity);
     const cart = this.getCurrentCart() ?? this.createCart();
     // cart.items.push(itemToAdd);
-    console.log(cart);
+    // console.log(cart);
     const index = cart.items.findIndex(x => x.id === itemToAdd.id);
     if (index === -1) {
       cart.items.push(itemToAdd);
     } else {
       cart.items[index].quantity++;
     }
+    this.setCart(cart);
   }
   private createCart(): ICart {
     const cart = new Cart();
     localStorage.setItem('cart_id', cart.id);
+    // this.cartSource.next(cart);
     return cart;
   }
   private mapProductItemToCart(item: IProduct, quantity: number): ICartItem {
