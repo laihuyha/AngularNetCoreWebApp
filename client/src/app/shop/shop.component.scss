@@ -1,6 +1,6 @@
 body {
   background-color: #eee;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 .mt-50 {
@@ -217,9 +217,12 @@ body {
 .filter-sidebar {
   display: inline-block;
   margin-top: 4vh;
-  background-color: lavender;
   height: 140vh;
+  object-fit: cover;
 }
 .filter-sidebar .container {
   margin: 2vh 0px;
+}
+.container-filter {
+  background-color: lavender;
 }

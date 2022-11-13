@@ -26,6 +26,10 @@ export class BasketService {
     return this.client.get(this.baseUrl + 'Cart?id=' + id)
       .pipe(
         map((cart: ICart) => {
+          cart.items.forEach(item => {
+            item.brand = JSON.parse(item.brand);
+            item.type = JSON.parse(item.type);
+          });
           this.cartSource.next(cart);
           console.log(this.getCurrentCart());
         })
@@ -65,14 +69,15 @@ export class BasketService {
     return cart;
   }
   private mapProductItemToCart(item: IProduct, quantity: number): ICartItem {
+    // console.log(item);
     return {
       id: item.id,
       productName: item.name,
       price: item.price,
       quantity,
       pictureUrl: item.imageUrl,
-      brand: JSON.stringify(item.brandId),
-      type: JSON.stringify(item.typeId)
+      brand: JSON.stringify(item.brand),
+      type: JSON.stringify(item.type)
     }
   }
 

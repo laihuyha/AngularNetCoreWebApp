@@ -2,7 +2,7 @@
   <div class="row">
     <ng-container *ngIf="listTypes && listBrands">
       <section class="col-md-3 filter-sidebar">
-        <div class="container">
+        <div class="container container-filter">
           <h3 class="agileits-sear-head mb-3">Brands</h3>
           <hr />
           <ul class="list-group ul-checkbox" *ngFor="let brand of listBrands">
@@ -14,7 +14,7 @@
             ></app-side-brands-filter>
           </ul>
         </div>
-        <div class="container">
+        <div class="container container-filter">
           <h3 class="agileits-sear-head mb-3">Types</h3>
           <hr />
           <ul class="list-group ul-checkbox" *ngFor="let type of listTypes">

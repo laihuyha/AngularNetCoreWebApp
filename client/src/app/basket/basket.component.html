@@ -3,11 +3,97 @@
     <p>Cart is empty</p>
   </div>
 
-  <div *ngIf="cart$ | async as cart">
-    <ul>
-      <li *ngFor="let item of cart.items">
-        {{ item.productName }} - {{ item.quantity }} - {{ item.price }}
-      </li>
-    </ul>
+  <div *ngIf="cart$ | async">
+    <div class="pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mb-1">
+            <div class="table-responsive">
+              <tabble class="table table-borderless">
+                <thead class="border-0 py-2">
+                  <tr>
+                    <th scope="col">
+                      <div class="p-2 px-3 text-uppercase">Product</div>
+                    </th>
+                    <th scope="col">
+                      <div class="py-2 text-uppercase">Price</div>
+                    </th>
+                    <th scope="col">
+                      <div class="py-2 text-uppercase">Quantity</div>
+                    </th>
+                    <th scope="col">
+                      <div class="py-2 text-uppercase">Total</div>
+                    </th>
+                    <th scope="col" class="border-0">
+                      <div class="py-2 text-uppercase">Remove</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of (cart$ | async).items">
+                    <th scope="row">
+                      <div class="p-2">
+                        <img
+                          src="{{ item.pictureUrl }}"
+                          alt="{{ item.productName }}"
+                          class="img-fluid"
+                          style="max-height: 50px"
+                        />
+                        <div class="ml-3 d-inline-block align-middle">
+                          <h5 class="mb-0">
+                            <a
+                              routerLink="/shop/{{ item.id }}"
+                              class="text-dark"
+                              >{{ item.productName }}</a
+                            >
+                          </h5>
+                          <span
+                            *ngIf="item.type"
+                            class="text-muted font-weight-normal font-italic d-block"
+                            >Type: {{ item.type.name }}</span
+                          >
+                        </div>
+                      </div>
+                    </th>
+                    <td class="align-middle">
+                      <strong>{{
+                        item.price | currency: "VND":"symbol":".0-3":"vi"
+                      }}</strong>
+                    </td>
+                    <td class="align-middle">
+                      <div class="d-flex align-items-center">
+                        <i
+                          class="fa fa-minus-circle text-warning mr-2"
+                          style="cursor: pointer; font-size: 2em"
+                        ></i>
+                        <span class="font-weight-bold" style="font-size: 1.5em">
+                          {{ item.quantity }}
+                        </span>
+                        <i
+                          class="fa fa-plus-circle text-warning mx-2"
+                          style="cursor: pointer; font-size: 2em"
+                        ></i>
+                      </div>
+                    </td>
+                    <td class="align-middle">
+                      <strong>{{
+                        item.price * item.quantity
+                          | currency: "VND":"symbol":".0-3":"vi"
+                      }}</strong>
+                    </td>
+                    <td class="align-middle">
+                      <i
+                        class="fa fa-trash text-danger"
+                        style="cursor: pointer; font-size: 2em"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </tabble>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
