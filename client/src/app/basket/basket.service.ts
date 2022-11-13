@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Cart, ICart, ICartItem } from '../share/models/cart';
+import { Cart, ICart, ICartItem, ICartTotal } from '../share/models/cart';
 import { IProduct } from '../share/models/product';
 
 @Injectable({
@@ -12,15 +12,10 @@ export class BasketService {
   baseUrl = environment.apiUrl;
   private cartSource = new BehaviorSubject<ICart>(null);
   cart$ = this.cartSource.asObservable();
+  private cartTotalSource = new BehaviorSubject<ICartTotal>(null);
+  basketTotal$ = this.cartTotalSource.asObservable();
 
   constructor(private client: HttpClient) { }
-
-  // Comming soon need AuthController
-  getCurrentUserName() {
-    // return this.client.get(this.baseUrl + 'account').subscribe((response: any) => { }, error => {
-    //   console.log(error);
-    // });
-  }
 
   getCart(id: string) {
     return this.client.get(this.baseUrl + 'Cart?id=' + id)
@@ -31,7 +26,9 @@ export class BasketService {
             item.type = JSON.parse(item.type);
           });
           this.cartSource.next(cart);
-          console.log(this.getCurrentCart());
+          this.CalculateTotals();
+
+          // console.log(this.getCurrentCart());
         })
       );
   }
@@ -40,6 +37,7 @@ export class BasketService {
     return this.client.post(this.baseUrl + 'Cart', cart).subscribe((response: ICart) => {
       console.log(response);
       this.cartSource.next(response);
+      this.CalculateTotals();
     }, error => {
       console.log(error);
     });
@@ -83,5 +81,17 @@ export class BasketService {
 
   removeFromCart(item: any) {
 
+  }
+
+
+  //Total
+  private CalculateTotals() {
+    const cart = this.getCurrentCart();
+    const shipping = 0;
+
+    // a is return value, b is current value, 0 is default value of a
+    const subtotal = cart.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
+    const total = shipping + subtotal;
+    this.cartTotalSource.next({ shipping, subtotal, total });
   }
 }

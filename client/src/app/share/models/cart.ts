@@ -19,3 +19,9 @@ export class Cart implements ICart {
     id = uuidv4();
     items: ICartItem[] = [];
 }
+
+export interface ICartTotal{
+    shipping: number;
+    subtotal: number;
+    total: number;
+}
