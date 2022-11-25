@@ -1,1 +1,22 @@
-<p>order-totals works!</p>
+<div class="bg-light px-4 py-3 text-uppercase font-weight-bold">
+  Order Sumary
+</div>
+<div class="p-4">
+  <p class="font-italic mb-2">
+    Shipping cost depending on your choice and location
+  </p>
+  <ul class="list-unstyled mb-2" *ngIf="cartTotal$ | async as totals">
+    <li class="d-flex justify-content-between py-3 border-bottom">
+      <b>Shipping and handling</b>
+      <b>{{ totals.shipping }}</b>
+    </li>
+    <li class="d-flex justify-content-between py-3 border-bottom">
+      <b>SubTotal</b>
+      <b>{{ totals.subtotal }}</b>
+    </li>
+    <li class="d-flex justify-content-between py-3 border-bottom">
+      <b>Total</b>
+      <b>{{ totals.total }}</b>
+    </li>
+  </ul>
+</div>
