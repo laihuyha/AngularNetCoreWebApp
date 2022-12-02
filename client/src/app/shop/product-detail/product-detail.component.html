@@ -27,7 +27,7 @@
           <div class="mb-2">
             <i
               class="fa fa-minus-circle text-warning"
-              (click)="decreaseQuantity()"
+              (click)="decrementQuantity()"
               style="cursor: pointer; font: 2em sans-serif"
             ></i>
             <input
@@ -44,12 +44,12 @@
             />
             <i
               class="fa fa-plus-circle text-warning ms-2"
-              (click)="increaseQuantity()"
+              (click)="incrementQuantity()"
               style="cursor: pointer; font: 2em sans-serif"
             ></i>
           </div>
           <div class="action">
-            <button class="add-to-cart btn btn-default" type="button">
+            <button class="add-to-cart btn btn-outline-primary" type="button" (click)="addItemToCart()">
               add to cart
             </button>
             <button class="like btn btn-default ms-2" type="button">
