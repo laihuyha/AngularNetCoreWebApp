@@ -34,8 +34,12 @@ export class BasketService {
   }
 
   setCart(cart: ICart) {
+    cart.items.forEach(item => {
+      item.brand = JSON.stringify(item.brand);
+      item.type = JSON.stringify(item.type);
+    });
     return this.client.post(this.baseUrl + 'Cart', cart).subscribe((response: ICart) => {
-      console.log(response);
+      // console.log(response);
       this.cartSource.next(response);
       this.CalculateTotals();
     }, error => {
@@ -44,7 +48,19 @@ export class BasketService {
   }
 
   getCurrentCart() {
-    return this.cartSource.value;
+    let cart = this.cartSource.value;
+    if (cart) {
+      cart.items.forEach(item => {
+        // console.log(item);
+        if(typeof item.brand === 'string') {
+          item.brand = JSON.parse(item.brand);
+        }
+        if (typeof item.type === 'string') {
+          item.type = JSON.parse(item.type);
+        }
+      });
+    }
+    return cart;
   }
 
   addToCart(item: IProduct, quantity = 1) {
@@ -60,12 +76,32 @@ export class BasketService {
     }
     this.setCart(cart);
   }
+
+  incrementItemQuantity(item: ICartItem) {
+    const cart = this.getCurrentCart();
+    const foundItemIndex = cart.items.findIndex(x => x.id === item.id);
+    cart.items[foundItemIndex].quantity++;
+    this.setCart(cart);
+  }
+
+  decrementItemQuantity(item: ICartItem) {
+    const cart = this.getCurrentCart();
+    const foundItemIndex = cart.items.findIndex(x => x.id === item.id);
+    if (foundItemIndex && cart.items[foundItemIndex].quantity > 1) {
+      cart.items[foundItemIndex].quantity--;
+      this.setCart(cart);
+    } else {
+      this.removeFromCart(item);
+    }
+  }
+
   private createCart(): ICart {
     const cart = new Cart();
     localStorage.setItem('cart_id', cart.id);
     // this.cartSource.next(cart);
     return cart;
   }
+
   private mapProductItemToCart(item: IProduct, quantity: number): ICartItem {
     // console.log(item);
     return {
@@ -79,8 +115,26 @@ export class BasketService {
     }
   }
 
-  removeFromCart(item: any) {
+  removeFromCart(item: ICartItem) {
+    const cart = this.getCurrentCart();
+    if (cart.items.some(x => x.id === item.id)) {
+      cart.items = cart.items.filter(i => i.id !== item.id);
+      if (cart.items.length > 0) {
+        this.setCart(cart);
+      } else {
+        this.deleteCart(cart);
+      }
+    }
+  }
 
+  deleteCart(cart: ICart) {
+    return this.client.delete(this.baseUrl + 'Cart?id=' + cart.id).subscribe(() => {
+      this.cartSource.next(null);
+      this.cartTotalSource.next(null);
+      localStorage.removeItem('cart_id');
+    }, error => {
+      console.log(error);
+    });
   }
 
 

@@ -63,6 +63,7 @@
                     <td class="align-middle">
                       <div class="d-flex align-items-center">
                         <i
+                          (click)="decrementItemQuantity(item)"
                           class="fa fa-minus-circle text-warning mr-2"
                           style="cursor: pointer; font-size: 2em"
                         ></i>
@@ -70,6 +71,7 @@
                           {{ item.quantity }}
                         </span>
                         <i
+                          (click)="incrementItemQuantity(item)"
                           class="fa fa-plus-circle text-warning mx-2"
                           style="cursor: pointer; font-size: 2em"
                         ></i>
@@ -83,6 +85,7 @@
                     </td>
                     <td class="align-middle">
                       <i
+                        (click)="removeCartItem(item)"
                         class="fa fa-trash text-danger"
                         style="cursor: pointer; font-size: 2em"
                       ></i>
