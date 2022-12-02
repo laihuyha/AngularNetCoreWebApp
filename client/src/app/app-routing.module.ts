@@ -17,6 +17,9 @@ const routes: Routes = [
   {
     path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule), data: { breadcrumb: 'Cart' }
   },
+  {
+    path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule), data: { breadcrumb: 'Checkout' }
+  },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
 

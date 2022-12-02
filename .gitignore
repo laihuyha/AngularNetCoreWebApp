@@ -17,3 +17,7 @@
 # */Properties
 .vscode
 appsettings.Development.json
+
+# *.db
+*.db
+*.rdb
