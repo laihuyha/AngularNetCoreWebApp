@@ -18,7 +18,8 @@ import { OrderTotalsComponent } from './components/order-totals/order-totals.com
   exports: [
     PaginationModule,
     PagerComponentComponent,
-    CarouselModule
+    CarouselModule,
+    OrderTotalsComponent
   ]
 })
 export class ShareModule { }

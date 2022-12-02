@@ -3,6 +3,7 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { BasketComponent } from './basket.component';
 import localeVi from '@angular/common/locales/vi';
 import { BasketRoutingModule } from './basket-routing.module';
+import { ShareModule } from '../share/share.module';
 
 registerLocaleData(localeVi, 'vi');
 
@@ -12,7 +13,8 @@ registerLocaleData(localeVi, 'vi');
   ],
   imports: [
     CommonModule,
-    BasketRoutingModule
+    BasketRoutingModule,
+    ShareModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'vi' }],
 })
