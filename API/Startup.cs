@@ -36,10 +36,11 @@ namespace API
                 options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddDbContext<AppIdentityDbCcontext>(
+            services.AddDbContext<AppIdentityDbContext>(
                 options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
             );
             services.AddAppServices();
+            services.AddIdentityServices();
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
