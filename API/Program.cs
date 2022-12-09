@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Core.Models.Identity;
+using Infrastructure.Identity;
+
 namespace API
 {
     public class Program
@@ -20,10 +24,17 @@ namespace API
                 try
                 {
                     var context = services.GetRequiredService<ShopContext>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
                     await context.Database.MigrateAsync();
+                    await identityContext.Database.MigrateAsync();
+
                     //Seed data to the database.
                     await ShopContextSeed.SeedAsync(context, loggerFactory);
+                    await IdentitySeed.SeedAsync(userManager);
+                    
                     context.Database.EnsureCreated();
+                    identityContext.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {

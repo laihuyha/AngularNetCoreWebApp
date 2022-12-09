@@ -40,7 +40,7 @@ namespace API
                 options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
             );
             services.AddAppServices();
-            services.AddIdentityServices();
+            services.AddIdentityServices(_configuration);
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -75,6 +75,8 @@ namespace API
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
