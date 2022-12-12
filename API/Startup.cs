@@ -30,6 +30,24 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
+
+                // Cấu hình xác thực cho API (Swagger)
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Auth Bearer Scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                c.AddSecurityDefinition("Bearer", securitySchema);
+                var securityRequirement = new OpenApiSecurityRequirement { { securitySchema, new[] { "Bearer" } } };
+                c.AddSecurityRequirement(securityRequirement);
             });
             services.AddDbContext<ShopContext>(options =>
             {
@@ -39,13 +57,17 @@ namespace API
             services.AddDbContext<AppIdentityDbContext>(
                 options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
             );
+
+            // Extension tự viết để thêm các services
             services.AddAppServices();
             services.AddIdentityServices(_configuration);
+
+            // Cấu hình CORS
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"); // Cho phép tất cả các request từ domain này
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
                 });
             });
@@ -75,7 +97,7 @@ namespace API
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
-            
+
             app.UseAuthentication();
 
             app.UseAuthorization();
