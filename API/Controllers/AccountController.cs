@@ -96,6 +96,7 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
+            registerDto.UserName = registerDto.DisplayName.ToLower();
             var emailExists = CheckEmailExistsAsync(registerDto.Email).Result.Value;
             if (emailExists)
             {

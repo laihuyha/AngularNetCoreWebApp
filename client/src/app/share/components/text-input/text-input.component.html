@@ -1,0 +1,53 @@
+<div class="form-group">
+  <input
+    [ngClass]="
+      controlDir && controlDir.control && controlDir.control.touched
+        ? !controlDir.control.valid
+          ? 'is-invalid'
+          : 'is-valid'
+        : ''
+    "
+    [type]="type"
+    (input)="onChange($event.currentTarget.value)"
+    (blur)="onTouched()"
+    id="{{ label }}"
+    #input
+    class="form-control"
+    placeholder="{{ label }}"
+  />
+  <div
+    class="invalid-feedback"
+    *ngIf="
+      controlDir &&
+      controlDir.control &&
+      !controlDir.control.valid &&
+      controlDir.control.touched
+    "
+  >
+    <span
+      class="text-danger float-left m-1"
+      *ngIf="controlDir.control.errors?.required"
+    >
+      {{ label }} is required
+    </span>
+    <span
+      class="text-danger float-left m-1"
+      *ngIf="controlDir.control.errors?.email"
+    >
+      {{ label }} is invalid
+    </span>
+    <span
+      class="text-danger float-left m-1"
+      *ngIf="controlDir.control.errors?.emailExists"
+    >
+      {{ label }} is already existed
+    </span>
+    <span
+      class="text-danger float-left m-1"
+      *ngIf="controlDir.control.errors?.minlength"
+    >
+      {{ label }} must be at least 8 characters
+    </span>
+    <br />
+  </div>
+</div>

@@ -1,134 +1,3 @@
-<!-- <div class="header2 bg-success-gradiant fixed-top">
-  <div class="container">
-    <nav class="navbar navbar-expand-lg h2-nav">
-      <a class="navbar-brand ms-4" routerLink="">BBB</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#header2"
-        aria-controls="header2"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="icon-menu"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse hover-dropdown row mt-1"
-        id="header2"
-      >
-        <ul class="navbar-nav col-md-10">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              [routerLink]="['']"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              >Home</a
-            >
-          </li>
-          <li class="nav-item dropdown position-relative">
-            <a
-              class="nav-link dropdown-toggle"
-              routerLink="/shop"
-              id="h2-dropdown"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Product <i class="fa fa-angle-down ml-1 font-12"></i>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li class="divider" role="separator"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-              <li class="divider" role="separator"></li>
-              <li>
-                <a class="dropdown-item" href="#">One more separated link</a>
-              </li>
-              <li class="dropdown-submenu position-relative">
-                <a
-                  class="dropdown-toggle dropdown-item"
-                  data-toggle="dropdown"
-                  href="#"
-                  >Dropdown
-                  <i class="fa fa-long-arrow-right float-right mt-1"></i
-                ></a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li class="dropdown-submenu position-relative">
-                    <a
-                      class="dropdown-toggle dropdown-item"
-                      href="#"
-                      data-toggle="dropdown"
-                      >Dropdown
-                      <i class="fa fa-long-arrow-right float-right mt-1"></i
-                    ></a>
-                    <ul class="nav navbar-nav dropdown-menu">
-                      <li class="dropdown-submenu position-relative">
-                        <a
-                          class="dropdown-toggle dropdown-item"
-                          href="#"
-                          data-toggle="dropdown"
-                          >Dropdown
-                          <i class="fa fa-long-arrow-right float-right mt-1"></i
-                        ></a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li>
-                            <a class="dropdown-item" href="#">Another action</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </li>
-                          <li class="divider" role="separator"></li>
-                          <li>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                          </li>
-                          <li class="divider" role="separator"></li>
-                          <li>
-                            <a class="dropdown-item" href="#"
-                              >One more separated link</a
-                            >
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <ul class="navbar-nav col-md-2">
-          <li class="nav-item position-relative">
-            <a
-              routerLink="/basket"
-              class="nav-link"
-              *ngIf="cart$ | async as cart"
-            >
-              <i class="fa-solid fa-cart-shopping"></i>
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              >
-                {{ cart?.items?.length <= 9 ? cart?.items?.length : "9+" }}
-              </span>
-            </a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">SignUp</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</div> -->
-
 <header
   class="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm fixed-top"
 >
@@ -160,13 +29,13 @@
 
     <ng-container *ngIf="(currentUser$ | async) === null">
       <a
-        routerLink="/account/login"
+        routerLink="/account/Login"
         class="btn btn-outline-secondary mr-2"
         href="#"
         >Login</a
       >
       <a
-        routerLink="/account/register"
+        routerLink="/account/Register"
         class="btn btn-outline-secondary mr-3"
         href="#"
         >Sign up</a

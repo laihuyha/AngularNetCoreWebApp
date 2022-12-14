@@ -30,9 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit = () => {
-    console.log(this.loginForm.get('password'));
     this.accountService.login(this.loginForm.value).subscribe(response => {
-      console.log("Logged in successfully");
+      // console.log("Logged in successfully");
       this.toast.success("Logged in successfully", "Success", { timeOut: 3000 }).onHidden.subscribe(() => {
         this.router.navigateByUrl('/shop');
       });
