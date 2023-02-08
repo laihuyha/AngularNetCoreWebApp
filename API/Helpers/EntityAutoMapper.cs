@@ -1,5 +1,7 @@
+using API.DTOs;
 using AutoMapper;
 using Core.Models.Entities;
+using Core.Models.Entities.OrderAggregate;
 using Core.Models.ViewModels;
 namespace API.Helpers
 {
@@ -14,6 +16,8 @@ namespace API.Helpers
             .ForMember(d => d.Brand, o => o.MapFrom(s => s.Brand))
             .ForMember(d => d.Type, o => o.MapFrom(s => s.Type))
             .ForMember(d => d.ImageUrl, o => o.MapFrom<UrlResolver>()); //Add Domain in front ImgUrl when mapping => Ex : images/a.png -> https://localhost:port/images/a.png
+
+            CreateMap<AddressDto, Address>().ReverseMap(); // This Address is Enitity different from Address of Identity which is using in AddressDto's method (Map)
         }
     }
 }

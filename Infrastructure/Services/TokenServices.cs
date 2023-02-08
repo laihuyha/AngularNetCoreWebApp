@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Core.Interfaces;
 using Core.Models.Identity;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace Infrastructure.Services
         public TokenServices(IConfiguration config)
         {
             _config = config;
-            _key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config["Token:Key"]));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
         }
 
         public string CreateToken(AppUser user)

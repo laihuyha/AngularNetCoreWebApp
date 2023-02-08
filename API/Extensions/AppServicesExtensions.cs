@@ -11,12 +11,16 @@ namespace API.Extensions
     {
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
+            // Injecting services to the application
             services.AddScoped<ITokenServices, TokenServices>();
             services.AddScoped<IProductServices, ProductServices>();
-            services.AddScoped<ICart, Cart>();
+            services.AddScoped<ICartServices, CartServices>();
             services.AddScoped<IBrandServices, BrandServices>();
+            services.AddScoped<IOrderServices, OrderServices>();
             services.AddScoped<ITypeServices, TypeServices>();
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
+
+            // Adding custom error response
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
@@ -28,6 +32,7 @@ namespace API.Extensions
                     return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = errors });
                 };
             });
+            
             return services;
         }
     }

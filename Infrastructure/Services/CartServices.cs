@@ -7,12 +7,12 @@ using StackExchange.Redis;
 
 namespace Infrastructure.Services
 {
-    public class Cart : ICart
+    public class CartServices : ICartServices
     {
         // private IConnectionMultiplexer _connectionMultiplexer;
         private IDatabase _database;
 
-        public Cart(IConnectionMultiplexer connectionMultiplexer)
+        public CartServices(IConnectionMultiplexer connectionMultiplexer)
         {
             // _connectionMultiplexer = connectionMultiplexer;
             _database = connectionMultiplexer.GetDatabase();

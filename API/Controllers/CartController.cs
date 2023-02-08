@@ -7,9 +7,9 @@ namespace API.Controllers
 {
     public class CartController : BaseApiController
     {
-        private readonly ICart _cartService;
+        private readonly ICartServices _cartService;
 
-        public CartController(ICart cartService)
+        public CartController(ICartServices cartService)
         {
             _cartService = cartService;
         }
