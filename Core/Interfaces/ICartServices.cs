@@ -3,7 +3,7 @@ using Core.Models.Entities;
 
 namespace Core.Interfaces
 {
-    public interface ICart
+    public interface ICartServices
     {
         Task<CustomerBasket> GetBasketAsync(string basketId);
         Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket);
