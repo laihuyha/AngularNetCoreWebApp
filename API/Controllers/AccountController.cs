@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
@@ -53,7 +53,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPut("address")]
+        [HttpPut("updateUserAddress")]
         public async Task<IActionResult> UpdateUserAddress(AddressDto address)
         {
             var user = await _userManager.FindByEmailWithAddressAsync(User);

@@ -31,7 +31,7 @@ namespace API
 
                     //Seed data to the database.
                     await ShopContextSeed.SeedAsync(context, loggerFactory);
-                    await IdentitySeed.SeedAsync(userManager);
+                    await IdentitySeed.SeedAsync(userManager, loggerFactory);
                     
                     context.Database.EnsureCreated();
                     identityContext.Database.EnsureCreated();
