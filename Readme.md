@@ -1,5 +1,6 @@
 # Unit Of Work Pattern
-    - Why we need Unit Of Work Pattern
+
+>   - Why we need Unit Of Work Pattern
         I. Why we use Unit Of Work Pattern
             - We need to use Unit Of Work Pattern when we need to do some complex logic with a lot of tables in a transaction.
             - We need to ensure that all data in database is consistent after the transaction.
@@ -7,9 +8,9 @@
             - We need to make sure that if any of the changes fail, then all the changes are rolled back.
             - We need to make sure that we don't have any duplicate data in the database.
             - Separate the business logic from the data access logic.
-                + Easy for testing.
-                + Easy for maintain like change the database or change the data access logic.
-                + Easy for trace the error.
+                - Easy for testing.
+                - Easy for maintain like change the database or change the data access logic.
+                - Easy for trace the error.
 
         II. Problem
             - Firstly, I don't negavtive the fact that we can use the repository pattern to do the same thing.
@@ -23,8 +24,8 @@
             - We need to create a Unit Of Work class that has a list of repositories and a method to save all changes in all repositories to the database in a single transaction. So we can use the Unit Of Work class to do the complex logic with a lot of tables in a transaction by using the generic repository.
         
         IV. Reference
-            - (https://dotnettutorials.net/lesson/unit-of-work-csharp-mvc/)
-            - (https://coding4food.net/2018/07/10/repository-va-unit-of-work-pattern/)
+            - https://dotnettutorials.net/lesson/unit-of-work-csharp-mvc/
+            - https://coding4food.net/2018/07/10/repository-va-unit-of-work-pattern/
 ## UI Error
     - Product Details
     - Product BreadCrumb
