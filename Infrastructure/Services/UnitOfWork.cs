@@ -27,6 +27,7 @@ namespace Infrastructure.Services
         public void Dispose()
         {
             _context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public IGenericServices<TEntity> GenericServices<TEntity>() where TEntity : BaseEntity

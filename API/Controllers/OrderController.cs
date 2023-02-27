@@ -30,5 +30,30 @@ namespace API.Controllers
                 return BadRequest(new APIMessageResponse(400, "Problem creating order"));
             return Ok(order);
         }
+
+        [HttpGet("GetOrdersForUser")]
+        public async Task<IActionResult> GetOrdersForUser()
+        {
+            var email = HttpContext.User.RetrieveEmailFromPrincipal();
+            var orders = await _orderServices.GetUserOrdersAsync(email);
+            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            var email = HttpContext.User.RetrieveEmailFromPrincipal();
+            var order = await _orderServices.GetOrderByIdAsync(id, email);
+            if (order == null)
+                return NotFound(new APIMessageResponse(404, "Order not found"));
+            return Ok(order);
+        }
+
+        [HttpGet("GetDeliveryMethods")]
+        public async Task<IActionResult> GetDeliveryMethods()
+        {
+            var deliveryMethods = await _orderServices.GetDeliveryMethodsAsync();
+            return Ok(deliveryMethods);
+        }
     }
 }

@@ -13,14 +13,14 @@ namespace Core.Specifications
         {
             AddInclude(o => o.OrderItems);
             AddInclude(o => o.ShipType);
-            AddOrderByDescending(o => o.OrderDate);
+            AddOrderByDescending(o => o.OrderDateNormalizer);
         }
 
         public OrderSpecifications(int OrderId, string email) : base(o => o.Id == OrderId && o.BuyerEmail == email)
         {
             AddInclude(o => o.OrderItems);
             AddInclude(o => o.ShipType);
-            AddOrderByDescending(o => o.OrderDate);
+            AddOrderByDescending(o => o.OrderDateNormalizer);
         }
     }
 }
