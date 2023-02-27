@@ -1,6 +1,5 @@
 # Unit Of Work Pattern
-
->   - Why we need Unit Of Work Pattern
+   - Why we need Unit Of Work Pattern
         I. Why we use Unit Of Work Pattern
             - We need to use Unit Of Work Pattern when we need to do some complex logic with a lot of tables in a transaction.
             - We need to ensure that all data in database is consistent after the transaction.
