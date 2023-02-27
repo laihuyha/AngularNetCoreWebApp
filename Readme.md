@@ -12,7 +12,7 @@
                 + Easy for trace the error.
 
         II. Problem
-            > Firstly, I don't negavtive the fact that we can use the repository pattern to do the same thing. But in some case we need to
+            - Firstly, I don't negavtive the fact that we can use the repository pattern to do the same thing. But in some case we need to
             use the Unit Of Work Pattern. For example, we have a project that has a lot of tables and we need to do some complex logic
             with them at one transaction. 
             But each respository has its own memory and take responsibility for its own table and in a transaction we need to do some logic with a lot of tables. And some tables need to be updated and some tables need to be inserted, during that time some data maybe broken or fail to do something at some repository lead to the bad result in database (data inconsistency). So we need to use the Unit Of Work Pattern to solve this problem.
@@ -23,15 +23,15 @@
         IV. Reference
             - https://dotnettutorials.net/lesson/unit-of-work-csharp-mvc/
             - https://coding4food.net/2018/07/10/repository-va-unit-of-work-pattern/
-# UI Error
+## UI Error
     - Product Details
     - Product BreadCrumb
 
-# Sometimes machince has some port using docker's port in configuration file so just change the port in configuration file and run the project again.
+### Sometimes machince has some port using docker's port in configuration file so just change the port in configuration file and run the project again.
 
-# If you want to run the project in docker then just run the following command
+### If you want to run the project in docker then just run the following command
     - docker-compose up -d
 
-# See redis keys
+### See redis keys
     - Open new page with localhost:{redis-commander-port}/
     - Login with username and password configured in docker-compose.yml file
