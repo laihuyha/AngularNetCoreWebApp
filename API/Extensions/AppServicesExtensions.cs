@@ -20,6 +20,9 @@ namespace API.Extensions
             services.AddScoped<ITypeServices, TypeServices>();
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
 
+            // Injecting UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // Adding custom error response
             services.Configure<ApiBehaviorOptions>(options =>
             {

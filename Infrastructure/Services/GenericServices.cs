@@ -23,16 +23,22 @@ namespace Infrastructure.Services
             return await ApplySpec(spec).CountAsync();
         }
 
-        public async Task<T> Create(T entity)
+        public void Create(T entity)
         {
-            var res = await _context.Set<T>().AddAsync(entity);
-            _context.SaveChanges();
-            return null;
+            var res = _context.Set<T>().AddAsync(entity);
+            // _context.SaveChanges();
+        }
+        
+        public void Update(T entity)
+        {
+            _context.Set<T>().Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified; 
         }
 
-        public Task<T> Delete(int id)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = _context.Set<T>().Find(id);
+            _context.Set<T>().Remove(entity);
         }
 
         public async Task<List<T>> GetAll()
@@ -53,11 +59,6 @@ namespace Infrastructure.Services
         public async Task<List<T>> ListSpecAsync(ISpecifications<T> spec)
         {
             return await ApplySpec(spec).ToListAsync();
-        }
-
-        public Task<T> Update(T entity)
-        {
-            throw new NotImplementedException();
         }
 
         private IQueryable<T> ApplySpec(ISpecifications<T> spec)

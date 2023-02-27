@@ -1,4 +1,5 @@
 using Core.Models.Entities;
+using Core.RequestParams;
 
 namespace Core.Specifications
 {
@@ -24,8 +25,8 @@ namespace Core.Specifications
         public ProductSpecification(ProductSpecParam parameter, bool IsOrderAndPaging) : base(
 
             x => ((string.IsNullOrEmpty(parameter.searchText) || x.Name.ToLower().Contains(parameter.searchText.ToLower())))
-            && (!parameter.brandId.HasValue || x.BrandId == parameter.brandId)
-            && (!parameter.typeId.HasValue || x.TypeId == parameter.typeId))
+            && (!parameter.BrandId.HasValue || x.BrandId == parameter.BrandId)
+            && (!parameter.TypeId.HasValue || x.TypeId == parameter.TypeId))
         {
             AddInclude(x => x.Type);
             AddInclude(x => x.Brand);
@@ -33,9 +34,9 @@ namespace Core.Specifications
             {
                 AddOrderBy(x => x.Name);
                 ApplyPaging(parameter.pageSize * (parameter.pageIndex - 1), parameter.pageSize);
-                if (!string.IsNullOrEmpty(parameter.sort))
+                if (!string.IsNullOrEmpty(parameter.Sort))
                 {
-                    switch (parameter.sort)
+                    switch (parameter.Sort)
                     {
                         case "priceAsc":
                             AddOrderBy(x => x.Price);

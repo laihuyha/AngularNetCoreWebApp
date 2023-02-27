@@ -1,4 +1,4 @@
-namespace Core.Specifications
+namespace Core.RequestParams
 {
     public class BaseParam
     {

@@ -9,9 +9,9 @@ namespace Core.Interfaces
     {
         public Task<List<T>> GetAll();
         public Task<T> GetById(int id);
-        public Task<T> Create(T entity);
-        public Task<T> Update(T entity);
-        public Task<T> Delete(int id);
+        public void Create(T entity);
+        public void Update(T entity);
+        public void Delete(int id);
         public Task<T> GetEntityWithSpec(ISpecifications<T> spec);
         public Task<List<T>> ListSpecAsync(ISpecifications<T> spec);
         public Task<int> CountAsync(ISpecifications<T> spec);

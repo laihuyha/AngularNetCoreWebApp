@@ -5,22 +5,33 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Core.Models.Entities;
 using Core.Models.Entities.OrderAggregate;
+using Core.Specifications;
 
 namespace Infrastructure.Services
 {
     public class OrderServices : IOrderServices
     {
-        private readonly IGenericServices<Order> _orderServices;
-        private readonly IGenericServices<DeliveryMethod> _deliveryMethodServices;
-        private readonly IGenericServices<Product> _productServices;
         private readonly ICartServices _basketServices;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public OrderServices(IGenericServices<Order> orderServices, IGenericServices<DeliveryMethod> deliveryMethodServices, IGenericServices<Product> productServices, ICartServices basketServices)
+        #region Old Code - Before Using UnitOfWork
+        // private readonly IGenericServices<Order> _orderServices;
+        // private readonly IGenericServices<DeliveryMethod> _deliveryMethodServices;
+        // private readonly IGenericServices<Product> _productServices;
+
+        // public OrderServices(IGenericServices<Order> orderServices, IGenericServices<DeliveryMethod> deliveryMethodServices, IGenericServices<Product> productServices, ICartServices basketServices)
+        // {
+        //     _orderServices = orderServices;
+        //     _deliveryMethodServices = deliveryMethodServices;
+        //     _productServices = productServices;
+        //     _basketServices = basketServices;
+        // }
+        #endregion
+
+        public OrderServices(IUnitOfWork unitOfWork, ICartServices basketServices)
         {
-            _orderServices = orderServices;
-            _deliveryMethodServices = deliveryMethodServices;
-            _productServices = productServices;
-            _basketServices = basketServices;
+            this._unitOfWork = unitOfWork;
+            this._basketServices = basketServices;
         }
 
         public async Task<Order> CreateOrderAsync(string BuyerEmail, int DeliveryMethodId, string BasketId, Address ShippingAddress)
@@ -31,37 +42,43 @@ namespace Infrastructure.Services
             var items = new List<OrderItem>();
             foreach (var item in basket.Items)
             {
-                var productItem = await _productServices.GetById(item.Id);
+                var productItem = await _unitOfWork.GenericServices<Product>().GetById(item.Id);
                 var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productItem.ImageUrl);
                 var orderItem = new OrderItem(itemOrdered, (double)productItem.Price, item.Quantity);
 
                 items.Add(orderItem);
             }
             // get delivery method from repo
-            var deliveryMethod = await _deliveryMethodServices.GetById(DeliveryMethodId);
+            var deliveryMethod = await _unitOfWork.GenericServices<DeliveryMethod>().GetById(DeliveryMethodId);
             // calc subtotal
             var subtotal = items.Sum(item => item.Price * item.Quantity); // mean with each item in items list, get the price and multiply by quantity then sum all of them
             // create order
             var order = new Order(BuyerEmail, ShippingAddress, deliveryMethod, items, subtotal);
+            _unitOfWork.GenericServices<Order>().Create(order);
             // save to db
-            // await _orderServices.Create(order);
+            var result = await _unitOfWork.Complete(); // if failed, everything will be rollback to the previous state
+            if (result <= 0) return null;
+            // delete basket
+            await _basketServices.DeleteBasketAsync(BasketId);
             // return order
             return order;
         }
 
-        public Task<List<DeliveryMethod>> GetDeliveryMethodsAsync()
+        public async Task<List<DeliveryMethod>> GetDeliveryMethodsAsync()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.GenericServices<DeliveryMethod>().GetAll();
         }
 
-        public Task<Order> GetOrderByIdAsync(int OrderId, string BuyerEmail)
+        public async Task<Order> GetOrderByIdAsync(int OrderId, string BuyerEmail)
         {
-            throw new NotImplementedException();
+            var spec = new OrderSpecifications(OrderId, BuyerEmail);
+            return await _unitOfWork.GenericServices<Order>().GetEntityWithSpec(spec);
         }
 
-        public Task<List<Order>> GetUserOrdersAsync(string BuyerEmail)
+        public async Task<List<Order>> GetUserOrdersAsync(string BuyerEmail)
         {
-            throw new NotImplementedException();
+            var spec =  new OrderSpecifications(BuyerEmail);
+            return await _unitOfWork.GenericServices<Order>().ListSpecAsync(spec);
         }
     }
 }
