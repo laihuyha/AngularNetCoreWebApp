@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.DTOs;
+using API.DTOs.BusinessDTO;
+using API.DTOs.ResponseDTO;
 using API.Errors;
 using API.Extensions;
 using AutoMapper;
@@ -36,7 +38,7 @@ namespace API.Controllers
         {
             var email = HttpContext.User.RetrieveEmailFromPrincipal();
             var orders = await _orderServices.GetUserOrdersAsync(email);
-            return Ok(orders);
+            return Ok(_mapper.Map<List<ResOrderDTO>>(orders));
         }
 
         [HttpGet("{id}")]
@@ -46,7 +48,7 @@ namespace API.Controllers
             var order = await _orderServices.GetOrderByIdAsync(id, email);
             if (order == null)
                 return NotFound(new APIMessageResponse(404, "Order not found"));
-            return Ok(order);
+            return Ok(_mapper.Map<ResOrderDTO>(order));
         }
 
         [HttpGet("GetDeliveryMethods")]

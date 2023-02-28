@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
-using API.DTOs;
+using API.DTOs.BusinessDTO;
+using API.DTOs.RequestDTO;
+using API.DTOs.ResponseDTO;
 using API.Errors;
 using API.Extensions;
 using Core.Interfaces;

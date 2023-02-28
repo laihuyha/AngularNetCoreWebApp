@@ -19,7 +19,7 @@ namespace Core.Models.Entities.OrderAggregate
         }
 
         public string BuyerEmail { get; set; }
-        public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
+        public DateTime OrderDate { get; set; } = DateTime.Now;
         public string OrderDateNormalizer { get; set; } = DateTime.Now.ToString("ddMMyyyy");
         public Address ToAddress { get; set; }
         public DeliveryMethod ShipType { get; set; }

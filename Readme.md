@@ -25,11 +25,8 @@
         IV. Reference
             - https://dotnettutorials.net/lesson/unit-of-work-csharp-mvc/
             - https://coding4food.net/2018/07/10/repository-va-unit-of-work-pattern/
-## UI Error
-    - Product Details
-    - Product BreadCrumb
-
-### Sometimes machince has some port using docker's port in configuration file so just change the port in configuration file and run the project again.
+### Error
+> Sometimes machince has some port using docker's port in configuration file so just change the port in configuration file and run the project again.
 
 ### If you want to run the project in docker then just run the following command
     - docker-compose up -d

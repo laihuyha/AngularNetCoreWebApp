@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Models.Identity;
 
-namespace API.DTOs
+namespace API.DTOs.BusinessDTO
 {
     public class AddressDto
     {
