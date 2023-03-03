@@ -38,30 +38,30 @@
 > - Configure the certificate in angular.json file:
 >   <br/>
 ><pre>
->   "serve": { <br/>
->       "builder": "@angular-devkit/build-angular:dev-server",<br/>
->       "options": {<br/>
->           "browserTarget": "client:build",<br/>
->           "sslCert": "ssl/localhost.pem",<br/>
->           "sslKey": "ssl/localhost-key.pem",<br/>
->           "ssl": true<br/>
->       },<br/>
->       "configurations": {<br/>
->           "production": {<br/>
->               "browserTarget": "client:build:production",<br/>
->               "sslKey": "ssl/localhost-key.pem",<br/>
->               "sslCert": "ssl/localhost.pem",<br/>
->               "ssl": true<br/>
->           },<br/>
->           "development": {<br/>
->               "browserTarget": "client:build:development",<br/>
->               "sslKey": "ssl/localhost-key.pem",<br/>
->               "sslCert": "ssl/localhost.pem",<br/>
->               "ssl": true<br/>
->           }<br/>
->       },<br/>
->       "defaultConfiguration": "development"<br/>
->   }<br/>
+>   "serve": { 
+>       "builder": "@angular-devkit/build-angular:dev-server",
+>       "options": {
+>           "browserTarget": "client:build",
+>           "sslCert": "ssl/localhost.pem",
+>           "sslKey": "ssl/localhost-key.pem",
+>           "ssl": true
+>       },
+>       "configurations": {
+>           "production": {
+>               "browserTarget": "client:build:production",
+>               "sslKey": "ssl/localhost-key.pem",
+>               "sslCert": "ssl/localhost.pem",
+>               "ssl": true
+>           },
+>           "development": {
+>               "browserTarget": "client:build:development",
+>               "sslKey": "ssl/localhost-key.pem",
+>               "sslCert": "ssl/localhost.pem",
+>               "ssl": true
+>           }
+>       },
+>       "defaultConfiguration": "development"
+>   }
 ></pre>
 > - Run the client project with https : ng serve
 
