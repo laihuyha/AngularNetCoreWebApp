@@ -32,7 +32,7 @@ export class AccountService {
       this.currentUserSource.next(null);
       return;
     }
-    return this.http.get(this.baseUrl + 'account', { headers: header }).pipe(
+    return this.http.get(this.baseUrl + 'account/currentUser', { headers: header }).pipe(
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.userToken);
