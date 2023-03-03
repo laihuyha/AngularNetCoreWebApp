@@ -36,29 +36,30 @@
 > - Install mkcert root certificate : mkcert -install
 > - Create a certificate for localhost : mkcert localhost
 > - Configure the certificate in angular.json file: 
+>        <br/>
 >        "serve": { <br/>
->          "builder": "@angular-devkit/build-angular:dev-server",<br/>
->          "options": {<br/>
->            "browserTarget": "client:build",<br/>
->            "sslCert": "ssl/localhost.pem",<br/>
->            "sslKey": "ssl/localhost-key.pem",<br/>
->            "ssl": true<br/>
->          },<br/>
->          "configurations": {<br/>
->            "production": {<br/>
->              "browserTarget": "client:build:production",<br/>
->              "sslKey": "ssl/localhost-key.pem",<br/>
->              "sslCert": "ssl/localhost.pem",<br/>
->              "ssl": true<br/>
->            },<br/>
->            "development": {<br/>
->              "browserTarget": "client:build:development",<br/>
->              "sslKey": "ssl/localhost-key.pem",<br/>
->              "sslCert": "ssl/localhost.pem",<br/>
->              "ssl": true<br/>
->            }<br/>
->          },<br/>
->          "defaultConfiguration": "development"<br/>
+>>          "builder": "@angular-devkit/build-angular:dev-server",<br/>
+>>          "options": {<br/>
+>>>            "browserTarget": "client:build",<br/>
+>>>            "sslCert": "ssl/localhost.pem",<br/>
+>>>            "sslKey": "ssl/localhost-key.pem",<br/>
+>>>            "ssl": true<br/>
+>>          },<br/>
+>>         "configurations": {<br/>
+>>>            "production": {<br/>
+>>>              "browserTarget": "client:build:production",<br/>
+>>>              "sslKey": "ssl/localhost-key.pem",<br/>
+>>>              "sslCert": "ssl/localhost.pem",<br/>
+>>>              "ssl": true<br/>
+>>            },<br/>
+>>            "development": {<br/>
+>>>              "browserTarget": "client:build:development",<br/>
+>>>              "sslKey": "ssl/localhost-key.pem",<br/>
+>>>              "sslCert": "ssl/localhost.pem",<br/>
+>>>              "ssl": true<br/>
+>>            }<br/>
+>>          },<br/>
+>>          "defaultConfiguration": "development"<br/>
 >        }<br/>
 > - Run the client project with https : ng serve
 ### Error
