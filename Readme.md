@@ -35,33 +35,34 @@
 > - Install mkcert : choco install mkcert
 > - Install mkcert root certificate : mkcert -install
 > - Create a certificate for localhost : mkcert localhost
-> - Configure the certificate in angular.json file: 
->        <br/>
->        "serve": { <br/>
->>          "builder": "@angular-devkit/build-angular:dev-server",<br/>
->>          "options": {<br/>
->>>            "browserTarget": "client:build",<br/>
->>>            "sslCert": "ssl/localhost.pem",<br/>
->>>            "sslKey": "ssl/localhost-key.pem",<br/>
->>>            "ssl": true<br/>
->>          },<br/>
->>         "configurations": {<br/>
->>>            "production": {<br/>
->>>              "browserTarget": "client:build:production",<br/>
->>>              "sslKey": "ssl/localhost-key.pem",<br/>
->>>              "sslCert": "ssl/localhost.pem",<br/>
->>>              "ssl": true<br/>
->>            },<br/>
->>            "development": {<br/>
->>>              "browserTarget": "client:build:development",<br/>
->>>              "sslKey": "ssl/localhost-key.pem",<br/>
->>>              "sslCert": "ssl/localhost.pem",<br/>
->>>              "ssl": true<br/>
->>            }<br/>
->>          },<br/>
->>          "defaultConfiguration": "development"<br/>
->        }<br/>
+> - Configure the certificate in angular.json file:
+>   <br/>
+>   "serve": { <br/>
+>&nbsp   "builder": "@angular-devkit/build-angular:dev-server",<br/>
+>&nbsp   "options": {<br/>
+>&nbsp&nbsp   "browserTarget": "client:build",<br/>
+>&nbsp&nbsp   "sslCert": "ssl/localhost.pem",<br/>
+>&nbsp&nbsp   "sslKey": "ssl/localhost-key.pem",<br/>
+>&nbsp&nbsp   "ssl": true<br/>
+>&nbsp   },<br/>
+>&nbsp   "configurations": {<br/>
+>&nbsp&nbsp   "production": {<br/>
+>&nbsp&nbsp&nbsp   "browserTarget": "client:build:production",<br/>
+>&nbsp&nbsp&nbsp   "sslKey": "ssl/localhost-key.pem",<br/>
+>&nbsp&nbsp&nbsp   "sslCert": "ssl/localhost.pem",<br/>
+>&nbsp&nbsp&nbsp   "ssl": true<br/>
+>&nbsp&nbsp   },<br/>
+>&nbsp&nbsp   "development": {<br/>
+>&nbsp&nbsp&nbsp   "browserTarget": "client:build:development",<br/>
+>&nbsp&nbsp&nbsp  "sslKey": "ssl/localhost-key.pem",<br/>
+>&nbsp&nbsp&nbsp   "sslCert": "ssl/localhost.pem",<br/>
+>&nbsp&nbsp&nbsp   "ssl": true<br/>
+>&nbsp&nbsp   }<br/>
+>&nbsp   },<br/>
+>&nbsp   "defaultConfiguration": "development"<br/>
+>   }<br/>
 > - Run the client project with https : ng serve
+
 ### Error
 
 > Sometimes machince has some port using docker's port in configuration file so just change the port in configuration file and run the project again.
