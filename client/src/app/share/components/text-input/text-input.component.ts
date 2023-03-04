@@ -28,6 +28,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange(event) { }
+  
   onTouched() { }
 
   writeValue(obj: any): void {
@@ -42,6 +43,4 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
   }
-
-
 }

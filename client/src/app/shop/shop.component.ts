@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Brand } from '../share/models/brands';
 import { IProduct } from '../share/models/product';
 import { Type } from '../share/models/types';
-import { ShopRequest } from '../share/RequestParam/ShopRequest';
+import { ShopRequest } from '../share/requestparam/shopRequest';
 import { ShopService } from './shop.service';
 
 @Component({

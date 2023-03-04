@@ -5,7 +5,7 @@ import { Brand } from '../share/models/brands';
 import { IPagination } from '../share/models/pagination';
 import { IProduct } from '../share/models/product';
 import { Type } from '../share/models/types';
-import { ShopRequest } from '../share/RequestParam/ShopRequest';
+import { ShopRequest } from '../share/requestparam/shopRequest';
 
 @Injectable({
   providedIn: 'root'

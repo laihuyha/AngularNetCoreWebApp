@@ -1,0 +1,13 @@
+button.nav-link {
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.nav-link.active {
+  background-color: #d76b43;
+  color: #fff;
+}

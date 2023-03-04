@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import localeVi from '@angular/common/locales/vi';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PagerComponentComponent } from './components/pager-component/pager-component.component';
@@ -7,18 +8,23 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './components/text-input/text-input.component';
+import { StepperComponent } from './components/stepper/stepper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+registerLocaleData(localeVi, 'vi');
 
 @NgModule({
   declarations: [
     PagerComponentComponent,
     OrderTotalsComponent,
     TextInputComponent,
+    StepperComponent,
   ],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
+    CdkStepperModule,
     ReactiveFormsModule,
   ],
   exports: [
@@ -29,6 +35,9 @@ import { TextInputComponent } from './components/text-input/text-input.component
     ReactiveFormsModule,
     BsDropdownModule,
     TextInputComponent,
-  ]
+    CdkStepperModule,
+    StepperComponent,
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'vi' }],
 })
 export class ShareModule { }
