@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
+import { RouterModule } from '@angular/router';
 registerLocaleData(localeVi, 'vi');
 
 @NgModule({
@@ -18,6 +20,7 @@ registerLocaleData(localeVi, 'vi');
     OrderTotalsComponent,
     TextInputComponent,
     StepperComponent,
+    BasketSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +29,7 @@ registerLocaleData(localeVi, 'vi');
     BsDropdownModule.forRoot(),
     CdkStepperModule,
     ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     PaginationModule,
@@ -37,6 +41,7 @@ registerLocaleData(localeVi, 'vi');
     TextInputComponent,
     CdkStepperModule,
     StepperComponent,
+    BasketSummaryComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'vi' }],
 })

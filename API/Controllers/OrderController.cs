@@ -7,11 +7,12 @@ using API.Extensions;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models.Entities.OrderAggregate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [ApiController]
+    [Authorize]
     public class OrderController : BaseApiController
     {
         private readonly IOrderServices _orderServices;

@@ -26,16 +26,19 @@ export class AccountService {
       this.currentUserSource.next(null);
       return of(null);
     }
+
     let header = new HttpHeaders();
     header = header.set('Authorization', `Bearer ${token}`);
-    if (token === null) {
-      this.currentUserSource.next(null);
-      return;
-    }
+
+    // if (token === null) {
+    //   this.currentUserSource.next(null);
+    //   return;
+    // }
+
     return this.http.get(this.baseUrl + 'account/currentUser', { headers: header }).pipe(
       map((user: IUser) => {
         if (user) {
-          localStorage.setItem('token', user.userToken);
+          // localStorage.setItem('token', user.userToken);
           this.currentUserSource.next(user);
         }
       })

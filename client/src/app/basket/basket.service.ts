@@ -52,7 +52,7 @@ export class BasketService {
     if (cart) {
       cart.items.forEach(item => {
         // console.log(item);
-        if(typeof item.brand === 'string') {
+        if (typeof item.brand === 'string') {
           item.brand = JSON.parse(item.brand);
         }
         if (typeof item.type === 'string') {
@@ -87,7 +87,7 @@ export class BasketService {
   decrementItemQuantity(item: ICartItem) {
     const cart = this.getCurrentCart();
     const foundItemIndex = cart.items.findIndex(x => x.id === item.id);
-    if (foundItemIndex && cart.items[foundItemIndex].quantity > 1) {
+    if (foundItemIndex != 1 && cart.items[foundItemIndex].quantity > 1) {
       cart.items[foundItemIndex].quantity--;
       this.setCart(cart);
     } else {
