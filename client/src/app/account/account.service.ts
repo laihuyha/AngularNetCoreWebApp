@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, map, of, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { IAddress } from '../share/models/address';
 import { IUser } from '../share/models/user';
 
 @Injectable({
@@ -16,10 +17,6 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private router: Router) { }
-
-  // getCurrentUser = () => {
-  //   return this.currentUserSource.value;
-  // }
 
   loadCurrentUser = (token: string) => {
     if (token === null) {
@@ -75,5 +72,13 @@ export class AccountService {
 
   checkEmailExists = (email: string) => {
     return this.http.get(this.baseUrl + 'account/emailexists?email=' + email);
+  }
+
+  getCurrentUserAddress = () => {
+    return this.http.get(this.baseUrl + 'account/userAddress');
+  }
+
+  updateUserAddress = (address: IAddress) => {
+    return this.http.put(this.baseUrl + 'account/updateUserAddress', address);
   }
 }

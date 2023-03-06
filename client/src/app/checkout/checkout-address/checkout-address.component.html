@@ -1,7 +1,16 @@
 <div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
   <div class="d-flex justify-content-between align-items-center">
     <h5>Shipping Address</h5>
-    <a class="btn btn-outline-success my-3"> Save as default address </a>
+    <button
+      class="btn btn-outline-success my-3"
+      (click)="saveUserAddress()"
+      [disabled]="
+        !checkoutForm.get('addressForm')?.valid ||
+        !checkoutForm.get('addressForm')?.dirty
+      "
+    >
+      Save as default address
+    </button>
   </div>
   <div class="row" formGroupName="addressForm">
     <div class="form-group col-6">
@@ -47,4 +56,14 @@
       ></app-text-input>
     </div>
   </div>
+</div>
+<div class="d-flex justify-content-between flex-row mb-4">
+  <button class="btn btn-outline-dark" routerLink="/basket">
+    <i class="fa fa-angle-left"></i>
+    Back to Cart
+  </button>
+  <button class="btn btn-outline-success" cdkStepperNext [disabled]="!checkoutForm.get('addressForm')?.valid">
+    Continue
+    <i class="fa fa-angle-right"></i>
+  </button>
 </div>
