@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Cart, ICart, ICartItem, ICartTotal } from '../share/models/cart';
+import { DeliveryMethod } from '../share/models/delivery';
 import { IProduct } from '../share/models/product';
 
 @Injectable({
@@ -14,8 +15,14 @@ export class BasketService {
   cart$ = this.cartSource.asObservable();
   private cartTotalSource = new BehaviorSubject<ICartTotal>(null);
   basketTotal$ = this.cartTotalSource.asObservable();
+  shipping = 0;
 
   constructor(private client: HttpClient) { }
+
+  setShippingPrice(deliveryMethod: DeliveryMethod) {
+    this.shipping = deliveryMethod.cost;
+    this.CalculateTotals();
+  }
 
   getCart(id: string) {
     return this.client.get(this.baseUrl + 'Cart?id=' + id)
@@ -129,23 +136,24 @@ export class BasketService {
 
   deleteCart(cart: ICart) {
     return this.client.delete(this.baseUrl + 'Cart?id=' + cart.id).subscribe(() => {
-      this.cartSource.next(null);
-      this.cartTotalSource.next(null);
-      localStorage.removeItem('cart_id');
+      this.deleteCartLocal();
     }, error => {
       console.log(error);
     });
   }
 
-
+  deleteCartLocal() {
+    this.cartSource.next(null);
+    this.cartTotalSource.next(null);
+    localStorage.removeItem('cart_id');
+  }
   //Total
   private CalculateTotals() {
     const cart = this.getCurrentCart();
-    const shipping = 0;
 
     // a is return value, b is current value, 0 is default value of a
     const subtotal = cart.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
-    const total = shipping + subtotal;
-    this.cartTotalSource.next({ shipping, subtotal, total });
+    const total = this.shipping + subtotal;
+    this.cartTotalSource.next({ shipping: this.shipping, subtotal, total });
   }
 }

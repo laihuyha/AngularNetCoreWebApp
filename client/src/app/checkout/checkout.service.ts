@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DeliveryMethod } from '../share/models/delivery';
+import { IOrderToCreate } from '../share/models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class CheckoutService {
         return s.sort((a, b) => b.cost - a.cost);
       })
     );
+  }
+
+  createOrder(order: IOrderToCreate) {
+    return this.http.post(this.baseUrl + 'order/createOrder', order);
   }
 }
