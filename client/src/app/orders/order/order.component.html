@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Order</th>
+        <th scope="col">Date</th>
+        <th scope="col">Total</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listOrders">
+        <th scope="row"># {{ item.id }}</th>
+        <td>{{ item.orderDate | date : "medium" }}</td>
+        <td>{{ item.total | currency : "VND" : "symbol" : ".0-3" : "vi" }}</td>
+        <td>{{ item.status }}</td>
+        <td><a routerLink="/orders/{{ item.id }}">Details</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

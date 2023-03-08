@@ -4,5 +4,14 @@
   <!-- <p class="mt-4">
     Your order number is <strong>{{ orderNumber }}</strong>
   </p> -->
-  <button class="btn btn-success">View your Order</button>
+  <button
+    *ngIf="order"
+    routerLink="/orders/{{ order.id }}"
+    class="btn btn-outline-success"
+  >
+    View your order
+  </button>
+  <button *ngIf="!order" routerLink="/orders" class="btn btn-outline-success">
+    View your orders
+  </button>
 </div>
