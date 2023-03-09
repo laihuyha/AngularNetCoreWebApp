@@ -77,3 +77,9 @@
 
     - Open new page with localhost:{redis-commander-port}/
     - Login with username and password configured in docker-compose.yml file
+
+# Will do in future
+    - Now Payment using Stripe
+    - Will payment using Paypal
+    - Will payment using Braintree if available
+    - Will payment using Momo if available
