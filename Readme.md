@@ -82,4 +82,4 @@
     - Now Payment using Stripe
     - Will payment using Paypal
     - Will payment using Braintree if available
-    - Will payment using Momo if available
+    - Will payment using Momo if available : docs => https://developers.momo.vn/v2/#/docs/aiov2/
