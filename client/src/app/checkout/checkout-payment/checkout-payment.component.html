@@ -1,4 +1,37 @@
-<p>checkout-payment works!</p>
+<div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
+  <div class="row">
+    <div class="form-group col-12" formGroupName="paymentForm">
+      <app-text-input
+        [label]="'Card Holder'"
+        formControlName="cardHolder"
+      ></app-text-input>
+    </div>
+    <div class="row mb-3 col-12">
+      <div class="col-6">
+        <div class="form-floating">
+          <label for="cardNumber">Card Number</label>
+          <div class="form-control" #cardNumber></div>
+          <span class="text-danger">{{cardErrors.cardNumber}}</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-floating">
+          <label for="cardNumber">Expiration Date</label>
+          <div class="form-control" #expirationDate></div>
+          <span class="text-danger">{{cardErrors.expirationDate}}</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-floating">
+          <label for="cardNumber">CSV</label>
+          <div class="form-control" #securityCode></div>
+          <span class="text-danger">{{cardErrors.securityCode}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="d-flex justify-content-between flex-row mb-4">
   <button class="btn btn-outline-dark" cdkStepperPrevious>
     <i class="fa fa-angle-left"></i>

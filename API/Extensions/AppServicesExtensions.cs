@@ -18,6 +18,7 @@ namespace API.Extensions
             services.AddScoped<IBrandServices, BrandServices>();
             services.AddScoped<IOrderServices, OrderServices>();
             services.AddScoped<ITypeServices, TypeServices>();
+            services.AddScoped<IPaymentServices, PaymentServices>();
             services.AddScoped(typeof(IGenericServices<>), typeof(GenericServices<>));
 
             // Injecting UnitOfWork
@@ -35,7 +36,7 @@ namespace API.Extensions
                     return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = errors });
                 };
             });
-            
+
             return services;
         }
     }

@@ -6,14 +6,16 @@
     <div class="pb-5">
       <div class="container">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <app-basket-summary
               (addItem)="incrementItemQuantity($event)"
               (decreaseItemQuantity)="decrementItemQuantity($event)"
               (removeItem)="removeCartItem($event)"
             ></app-basket-summary>
           </div>
-          <div class="col-md-4">
+        </div>
+        <div>
+          <div class="col-md-5 offset-7">
             <app-order-totals></app-order-totals>
             <a
               routerLink="/checkout"

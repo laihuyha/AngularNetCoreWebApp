@@ -8,5 +8,10 @@ namespace API.Extensions
         {
             return user?.FindFirstValue(ClaimTypes.Email);
         }
+
+        public static string RetrieveUserNameFromPrincipal(this ClaimsPrincipal user)
+        {
+            return user?.FindFirstValue(ClaimTypes.Name);
+        }
     }
 }

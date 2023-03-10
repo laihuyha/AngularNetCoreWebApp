@@ -15,13 +15,25 @@ export class BasketService {
   cart$ = this.cartSource.asObservable();
   private cartTotalSource = new BehaviorSubject<ICartTotal>(null);
   basketTotal$ = this.cartTotalSource.asObservable();
-  shipping = 0;
 
   constructor(private client: HttpClient) { }
 
+  createPaymentIntent() {
+    return this.client.post(this.baseUrl + 'payment/' + this.getCurrentCart().id, {})
+      .pipe(
+        map((basket) => {
+          this.cartSource.next(basket as ICart);
+        })
+      )
+  }
+
   setShippingPrice(deliveryMethod: DeliveryMethod) {
-    this.shipping = deliveryMethod.cost;
-    this.CalculateTotals();
+    const basket = this.getCurrentCart();
+    basket.shippingCost = deliveryMethod.cost;
+    if (basket) {
+      basket.deliveryMethodId = deliveryMethod.id;
+      this.setCart(basket);
+    }
   }
 
   getCart(id: string) {
@@ -153,7 +165,7 @@ export class BasketService {
 
     // a is return value, b is current value, 0 is default value of a
     const subtotal = cart.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
-    const total = this.shipping + subtotal;
-    this.cartTotalSource.next({ shipping: this.shipping, subtotal, total });
+    const total = cart.shippingCost + subtotal;
+    this.cartTotalSource.next({ shipping: cart.shippingCost, subtotal, total });
   }
 }

@@ -16,6 +16,10 @@ namespace Core.Models.Entities
 
         public string Id { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
+        public int? DeliveryMethodId { get; set; }
+        public string ClientSecret { get; set; }
+        public string PaymentIntentId { get; set; }
+        public decimal ShippingCost { get; set; }
     }
 
     public class Item
