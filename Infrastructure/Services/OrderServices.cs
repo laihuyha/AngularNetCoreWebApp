@@ -51,9 +51,22 @@ namespace Infrastructure.Services
             var deliveryMethod = await _unitOfWork.GenericServices<DeliveryMethod>().GetById(DeliveryMethodId);
             // calc subtotal
             var subtotal = items.Sum(item => item.Price * item.Quantity); // mean with each item in items list, get the price and multiply by quantity then sum all of them
-            // create order
-            var order = new Order(BuyerEmail, ShippingAddress, deliveryMethod, items, subtotal);
-            _unitOfWork.GenericServices<Order>().Create(order);
+            // check if order exists
+            var spec = new OrderByPaymentIntentIdSpecification(basket.PaymentIntentId);
+            var order = await _unitOfWork.GenericServices<Order>().GetEntityWithSpec(spec);
+            if (order != null)
+            {
+                order.ToAddress = ShippingAddress;
+                order.ShipType = deliveryMethod;
+                order.SubTotal = subtotal;
+                _unitOfWork.GenericServices<Order>().Update(order);
+            }
+            else
+            {
+                // create order
+                order = new Order(BuyerEmail, ShippingAddress, deliveryMethod, items, subtotal, basket.PaymentIntentId);
+                _unitOfWork.GenericServices<Order>().Create(order);
+            }
             // save to db
             var result = await _unitOfWork.Complete(); // if failed, everything will be rollback to the previous state
             if (result <= 0) return null;
@@ -76,7 +89,7 @@ namespace Infrastructure.Services
 
         public async Task<List<Order>> GetUserOrdersAsync(string BuyerEmail)
         {
-            var spec =  new OrderSpecifications(BuyerEmail);
+            var spec = new OrderSpecifications(BuyerEmail);
             return await _unitOfWork.GenericServices<Order>().ListSpecAsync(spec);
         }
     }

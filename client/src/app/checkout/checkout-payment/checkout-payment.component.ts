@@ -87,7 +87,7 @@ export class CheckoutPaymentComponent implements OnInit {
           payment_method: {
             card: this.cardNumber,
             billing_details: {
-              name: this.checkoutForm?.get('paymentForm')?.get('nameOnCard')?.value,
+              name: this.checkoutForm?.get('paymentForm')?.get('cardHolder')?.value,
             }
           }
         }).then((result) => {

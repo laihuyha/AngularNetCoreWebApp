@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +26,7 @@ namespace Infrastructure.Services
         {
             StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
             var cart = await _basketRepository.GetBasketAsync(basketId);
+            if (cart == null) return null;
             var shippingPrice = 0.0;
 
             if (cart.DeliveryMethodId.HasValue)
