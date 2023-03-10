@@ -49,14 +49,6 @@ namespace API
                 var securityRequirement = new OpenApiSecurityRequirement { { securitySchema, new[] { "Bearer" } } };
                 c.AddSecurityRequirement(securityRequirement);
             });
-            services.AddDbContext<ShopContext>(options =>
-            {
-                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            services.AddDbContext<AppIdentityDbContext>(
-                options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
-            );
 
             // Extension tự viết để thêm các services
             services.AddAppServices();
@@ -72,16 +64,29 @@ namespace API
                 });
             });
 
+            #region Cấu hình các Connection
+            // Cấu hình Redis
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var configuration = ConfigurationOptions.Parse(_configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
             });
+            // Cấu hình Db Entity Framework
+            services.AddDbContext<ShopContext>(options =>
+            {
+                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
+            });
+            // Cấu hình Db Identity
+            services.AddDbContext<AppIdentityDbContext>(
+                options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
+            );
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Cấu hình Middleware cho request lỗi
             app.UseMiddleware<ExceptionMiddleware>();
             if (env.IsDevelopment())
             {

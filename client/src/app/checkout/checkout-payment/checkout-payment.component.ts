@@ -91,6 +91,7 @@ export class CheckoutPaymentComponent implements OnInit {
             }
           }
         }).then((result) => {
+          console.log(result);
           if (result.paymentIntent) {
             this.toastr.success('Order created successfully');
             this.basketServices.deleteCartLocal();
