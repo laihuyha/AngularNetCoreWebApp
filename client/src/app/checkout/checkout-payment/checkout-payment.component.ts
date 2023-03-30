@@ -4,11 +4,12 @@ import { NavigationExtras, Router } from '@angular/router';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { StripeCardCvcElement, StripeCardExpiryElement, StripeCardNumberElement } from '@stripe/stripe-js/types/stripe-js';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from 'src/app/account/account.service';
+import { firstValueFrom } from 'rxjs';
 import { BasketService } from 'src/app/basket/basket.service';
 import { IAddress } from 'src/app/share/models/address';
 import { ICart } from 'src/app/share/models/cart';
 import { IOrderToCreate } from 'src/app/share/models/order';
+import { environment } from 'src/environments/environment';
 import { CheckoutService } from '../checkout.service';
 
 @Component({
@@ -29,6 +30,8 @@ export class CheckoutPaymentComponent implements OnInit {
 
   cardErrors: cardErrors = new cardErrors();
 
+  loading: boolean = false;
+
   constructor(
     private basketServices: BasketService,
     private checkoutServices: CheckoutService,
@@ -38,11 +41,10 @@ export class CheckoutPaymentComponent implements OnInit {
 
 
   ngOnInit(): void {
-    loadStripe("pk_test_51MjjywBFz34eglKwhFzaUqWCKXz3O7I9iHy7EI1mdx25to4iG2ASp4pA6lqzG53wIhHTlO0Zfmm4jgnwCjSq3RfI00eGpFaVBX").then(stripe => {
+    loadStripe(environment.Stripe.PublishableKey).then(stripe => {
       this.stripe = stripe;
       const elements = this.stripe.elements();
       if (elements) {
-
         this.cardNumber = elements.create('cardNumber');
         this.cardNumber.mount(this.cardNumberElement.nativeElement);
         this.cardNumber.on('change', (event) => {
@@ -76,50 +78,71 @@ export class CheckoutPaymentComponent implements OnInit {
     });
   }
 
-  submitOrder() {
+  async submitOrder() {
+    this.loading = true;
     const cart = this.basketServices.getCurrentCart();
-    if (!cart) return;
-    const orderToCreate = this.getOrderToCreate(cart);
-    if (!orderToCreate) return;
-    this.checkoutServices.createOrder(orderToCreate).subscribe({
-      next: (order) => {
-        this.stripe?.confirmCardPayment(cart.clientSecret, {
-          payment_method: {
-            card: this.cardNumber,
-            billing_details: {
-              name: this.checkoutForm?.get('paymentForm')?.get('cardHolder')?.value,
-            }
-          }
-        }).then((result) => {
-          console.log(result);
-          if (result.paymentIntent) {
-            this.toastr.success('Order created successfully');
-            this.basketServices.deleteCartLocal();
-            const navigationExtras: NavigationExtras = { state: order };
-            this.router.navigate(['checkout/success'], navigationExtras);
-            console.log(order);
-          }
-        }, (error) => {
-          this.toastr.error(error.message);
-          console.log(error);
-        });
-      },
-      error: (error) => {
-        this.toastr.error(error.message);
-        console.log(error);
+
+    try {
+      const createdOrder = await this.createOrder(cart);
+      const paymentResult = await this.confirmPaymentWithStripe(cart);
+      if (paymentResult.paymentIntent) {
+        this.basketServices.deleteCartLocal();
+        const navigationExtras: NavigationExtras = { state: createdOrder };
+        this.router.navigate(['checkout/success'], navigationExtras);
+      } else {
+        this.toastr.error(paymentResult.error.message)
       }
-    });
+    } catch (error) {
+      console.log(error);
+      this.toastr.error(error.message);
+    }
+    finally {
+      this.loading = false;
+    }
   }
-  private getOrderToCreate(cart: ICart) {
+  private async confirmPaymentWithStripe(cart: ICart) {
+    if (!cart) throw new Error("Cart is null");
+    const result = this.stripe?.confirmCardPayment(cart.clientSecret, {
+      payment_method: {
+        card: this.cardNumber,
+        billing_details: {
+          name: this.checkoutForm?.get('paymentForm')?.get('cardHolder')?.value,
+        }
+      }
+    })
+
+    if (!result) throw new Error("Problem with payment");
+    return result;
+  }
+  private async createOrder(cart: ICart) {
+
+    if (!cart) throw new Error("Cart is null");
+
+    const orderToCreate = this.getOrderToCreate(cart);
+    return firstValueFrom(this.checkoutServices.createOrder(orderToCreate))
+  }
+  private getOrderToCreate(cart: ICart): IOrderToCreate {
+
     const deliveryMethodId = this.checkoutForm?.get('deliveryForm')?.get('deliveryMethod')?.value;
     const shipToAddress: IAddress = this.checkoutForm?.get('addressForm')?.value as IAddress;
-    if (!shipToAddress || !deliveryMethodId) return;
+
+    if (!shipToAddress || !deliveryMethodId) throw new Error("ShipToAddress or DeliveryMethodId is null");
+
     let orderToCreate: IOrderToCreate = {
       cartId: cart.id,
       deliveryMethodId: deliveryMethodId,
       shipToAddress: shipToAddress
     };
     return orderToCreate;
+  }
+
+  get cardValid() {
+    console.log(this.checkoutForm?.get('paymentForm'));
+    return this.checkoutForm?.get('paymentForm')?.valid
+    // // && this.checkoutForm?.get('paymentForm')?.get('cardHolder')?.valid
+    // && this.checkoutForm?.get('paymentForm')?.get('cardNumber')?.valid
+    // && this.checkoutForm?.get('paymentForm')?.get('expirationDate')?.valid
+    // && this.checkoutForm?.get('paymentForm')?.get('securityCode')?.valid;
   }
 }
 

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Order } from '@stripe/stripe-js';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DeliveryMethod } from '../share/models/delivery';
@@ -31,6 +32,6 @@ export class CheckoutService {
   }
 
   createOrder(order: IOrderToCreate) {
-    return this.http.post(this.baseUrl + 'order/createOrder', order);
+    return this.http.post<Order>(this.baseUrl + 'order/createOrder', order);
   }
 }

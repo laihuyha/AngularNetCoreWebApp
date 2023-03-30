@@ -11,21 +11,21 @@
         <div class="form-floating">
           <label for="cardNumber">Card Number</label>
           <div class="form-control" #cardNumber></div>
-          <span class="text-danger">{{cardErrors.cardNumber}}</span>
+          <span class="text-danger">{{ cardErrors.cardNumber }}</span>
         </div>
       </div>
       <div class="col-3">
         <div class="form-floating">
           <label for="cardNumber">Expiration Date</label>
           <div class="form-control" #expirationDate></div>
-          <span class="text-danger">{{cardErrors.expirationDate}}</span>
+          <span class="text-danger">{{ cardErrors.expirationDate }}</span>
         </div>
       </div>
       <div class="col-3">
         <div class="form-floating">
           <label for="cardNumber">CSV</label>
           <div class="form-control" #securityCode></div>
-          <span class="text-danger">{{cardErrors.securityCode}}</span>
+          <span class="text-danger">{{ cardErrors.securityCode }}</span>
         </div>
       </div>
     </div>
@@ -37,7 +37,11 @@
     <i class="fa fa-angle-left"></i>
     Check your order
   </button>
-  <button class="btn btn-success" (click)="submitOrder()">
+  <button
+    class="btn btn-success"
+    [disabled]="!cardValid"
+    (click)="submitOrder()"
+  >
     Checkout
     <i class="fa fa-angle-right"></i>
   </button>
