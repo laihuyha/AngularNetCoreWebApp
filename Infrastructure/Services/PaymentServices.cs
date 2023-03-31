@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Core.Models.Entities;
 using Core.Models.Entities.OrderAggregate;
+using Core.Specifications;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 
@@ -77,6 +78,28 @@ namespace Infrastructure.Services
             await _basketRepository.UpdateBasketAsync(cart);
 
             return cart;
+        }
+
+        public async Task<Order> UpdateOrderPaymentFailed(string paymentIntentId)
+        {
+            var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
+            var order = await _unitOfWork.GenericServices<Order>().GetEntityWithSpec(spec);
+
+            if (order == null) return null;
+            order.Status = OrderStatus.PaymentFailed;
+            await _unitOfWork.Complete();
+            return order;
+        }
+
+        public async Task<Order> UpdateOrderPaymentSucceeded(string paymentIntentId)
+        {
+            var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
+            var order = await _unitOfWork.GenericServices<Order>().GetEntityWithSpec(spec);
+
+            if (order == null) return null;
+            order.Status = OrderStatus.PaymentReceived;
+            await _unitOfWork.Complete();
+            return order;
         }
     }
 }

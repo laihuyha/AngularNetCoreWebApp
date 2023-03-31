@@ -28,7 +28,11 @@ export class CheckoutPaymentComponent implements OnInit {
   expirationDate?: StripeCardExpiryElement
   securityCode?: StripeCardCvcElement
 
+  /// Validation
   cardErrors: cardErrors = new cardErrors();
+  cardNumberValid: boolean = false;
+  expirationDateValid: boolean = false;
+  securityCodeValid: boolean = false;
 
   loading: boolean = false;
 
@@ -48,6 +52,7 @@ export class CheckoutPaymentComponent implements OnInit {
         this.cardNumber = elements.create('cardNumber');
         this.cardNumber.mount(this.cardNumberElement.nativeElement);
         this.cardNumber.on('change', (event) => {
+          this.cardNumberValid = event.complete;
           if (event.error) {
             this.cardErrors.cardNumber = event.error.message;
           } else {
@@ -58,6 +63,7 @@ export class CheckoutPaymentComponent implements OnInit {
         this.expirationDate = elements.create('cardExpiry');
         this.expirationDate.mount(this.expirationDateElement.nativeElement);
         this.expirationDate.on('change', (event) => {
+          this.expirationDateValid = event.complete;
           if (event.error) {
             this.cardErrors.expirationDate = event.error.message;
           } else {
@@ -68,6 +74,7 @@ export class CheckoutPaymentComponent implements OnInit {
         this.securityCode = elements.create('cardCvc');
         this.securityCode.mount(this.securityCodeElement.nativeElement);
         this.securityCode.on('change', (event) => {
+          this.securityCodeValid = event.complete;
           if (event.error) {
             this.cardErrors.securityCode = event.error.message;
           } else {
@@ -86,7 +93,7 @@ export class CheckoutPaymentComponent implements OnInit {
       const createdOrder = await this.createOrder(cart);
       const paymentResult = await this.confirmPaymentWithStripe(cart);
       if (paymentResult.paymentIntent) {
-        this.basketServices.deleteCartLocal();
+        this.basketServices.deleteCart(cart);
         const navigationExtras: NavigationExtras = { state: createdOrder };
         this.router.navigate(['checkout/success'], navigationExtras);
       } else {
@@ -137,12 +144,8 @@ export class CheckoutPaymentComponent implements OnInit {
   }
 
   get cardValid() {
-    console.log(this.checkoutForm?.get('paymentForm'));
-    return this.checkoutForm?.get('paymentForm')?.valid
-    // // && this.checkoutForm?.get('paymentForm')?.get('cardHolder')?.valid
-    // && this.checkoutForm?.get('paymentForm')?.get('cardNumber')?.valid
-    // && this.checkoutForm?.get('paymentForm')?.get('expirationDate')?.valid
-    // && this.checkoutForm?.get('paymentForm')?.get('securityCode')?.valid;
+    // console.log(this.checkoutForm?.get('paymentForm'));
+    return this.checkoutForm?.get('paymentForm')?.valid && this.cardNumberValid && this.expirationDateValid && this.securityCodeValid;
   }
 }
 

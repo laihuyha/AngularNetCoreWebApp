@@ -48,10 +48,7 @@ export class CheckoutComponent implements OnInit {
     }),
 
     paymentForm: this.fb.group({
-      cardNumber: ['', Validators.required],
       cardHolder: ['', Validators.required],
-      expirationDate: ['', Validators.required],
-      securityCode: ['', Validators.required],
     })
 
   });

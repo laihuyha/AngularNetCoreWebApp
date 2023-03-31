@@ -79,6 +79,8 @@
     - Login with username and password configured in docker-compose.yml file
 
 # Will do in future
+    - Will add new payment method COD instead of only Prepay
+
     - Now Payment using Stripe
     - Will payment using Paypal
     - Will payment using Braintree if available
