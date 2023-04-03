@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Brand } from '../share/models/brands';
 import { IProduct } from '../share/models/product';
 import { Type } from '../share/models/types';
-import { ShopRequest } from '../share/requestparam/shopRequest';
+import { ShopRequest } from '../share/RequestParam/shopRequest';
 import { ShopService } from './shop.service';
 
 @Component({
@@ -21,7 +21,10 @@ export class ShopComponent implements OnInit {
   pageCount: number
   shopParams = new ShopRequest();
   textInput: string;
-  constructor(private _shopServices: ShopService) { }
+
+  constructor(private _shopServices: ShopService) {
+    this.shopParams = _shopServices.getShopRequest();
+  }
 
   ngOnInit(): void {
     if (this.shopParams.pageIndex == null) {
@@ -37,11 +40,11 @@ export class ShopComponent implements OnInit {
 
   //#region Functions
   loadProducts() {
-    this._shopServices.getAllProducts(this.shopParams).subscribe(result => {
+    this._shopServices.getAllProducts().subscribe(result => {
       // console.log(result);
       this.productList = result.data; // Respone sẽ có data là 1 list sản phẩm, đưa nó vào biến productList để đem đi chỗ khác lặp
-      this.shopParams.pageIndex = result.pageIndex;
-      this.shopParams.pageSize = result.pageSize;
+      // this.shopParams.pageIndex = result.pageIndex;
+      // this.shopParams.pageSize = result.pageSize; 
       this.count = result.count
       this.pageCount = result.pageCount
     }, error => {

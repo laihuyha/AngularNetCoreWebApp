@@ -4,6 +4,7 @@ using API.DTOs.BusinessDTO;
 using API.DTOs.ResponseDTO;
 using API.Errors;
 using API.Extensions;
+using API.Helpers;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Models.Entities.OrderAggregate;
@@ -42,6 +43,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<List<ResOrderDTO>>(orders));
         }
 
+        [Cache(300)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderById(int id)
         {
@@ -52,6 +54,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<ResOrderDTO>(order));
         }
 
+        [Cache(600)]
         [HttpGet("GetDeliveryMethods")]
         public async Task<IActionResult> GetDeliveryMethods()
         {

@@ -34,6 +34,7 @@ namespace API.Controllers
             _typeServices = typeServices;
         }
 
+        [Cache(300)]
         [HttpGet]
         [Route("all")]
         public async Task<ActionResult<Pagination<ProductVM>>> GetAll([FromQuery] ProductSpecParam Params)
@@ -63,6 +64,8 @@ namespace API.Controllers
             return Ok(_mapper.Map<Product, ProductVM>(product));
         }
 
+
+        [Cache(300)]
         [HttpGet("brands")]
         public async Task<ActionResult<List<ProductBrand>>> GetAllBrands()
         {
@@ -70,6 +73,7 @@ namespace API.Controllers
             return Ok(brands);
         }
 
+        [Cache(300)]
         [HttpGet("types")]
         public async Task<ActionResult<List<ProductType>>> GetAllTypes()
         {

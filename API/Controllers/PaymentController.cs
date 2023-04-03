@@ -8,7 +8,6 @@ using API.Extensions;
 using System.IO;
 using Stripe;
 using Core.Models.Entities.OrderAggregate;
-using System.Threading;
 
 namespace API.Controllers
 {

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.Helpers;
 using Core.Interfaces;
 using Core.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace API.Controllers
             _cartService = cartService;
         }
 
+        [Cache(300)]
         [HttpGet]
         public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
         {

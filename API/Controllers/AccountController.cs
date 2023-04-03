@@ -4,6 +4,7 @@ using API.DTOs.RequestDTO;
 using API.DTOs.ResponseDTO;
 using API.Errors;
 using API.Extensions;
+using API.Helpers;
 using Core.Interfaces;
 using Core.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -27,16 +28,17 @@ namespace API.Controllers
         }
 
         [Authorize]
+        [Cache(3600)]
         [HttpGet("currentUser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailFromClaimsPrinciple(User);
-            return new UserDto
+            return Ok(new UserDto
             {
                 Email = user.Email,
                 DisplayName = user.DisplayName,
                 UserToken = _tokenServices.CreateToken(user)
-            };
+            });
         }
 
         [HttpGet("emailexists")]

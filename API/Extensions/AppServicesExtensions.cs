@@ -24,6 +24,9 @@ namespace API.Extensions
             // Injecting UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            // Injecting ResponseCacheServices
+            services.AddSingleton<IResponseCacheServices, ResponseCacheServices>();
+            
             // Adding custom error response
             services.Configure<ApiBehaviorOptions>(options =>
             {
