@@ -11,28 +11,19 @@ import { ShopService } from './shop.service';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
-
   @ViewChild('searchText', { static: true }) searchText: ElementRef;
 
   productList: IProduct[];
   listBrands: Brand[];
   listTypes: Type[];
   count: number;
-  pageCount: number
-  shopParams = new ShopRequest();
+  pageCount: number;
   textInput: string;
+  shopParams = { ...this._shopServices.getShopRequest(), pageIndex: 1, pageSize: 6 };
 
-  constructor(private _shopServices: ShopService) {
-    this.shopParams = _shopServices.getShopRequest();
-  }
+  constructor(private _shopServices: ShopService) { }
 
   ngOnInit(): void {
-    if (this.shopParams.pageIndex == null) {
-      this.shopParams.pageIndex = 1;
-    }
-    if (this.shopParams.pageSize == null) {
-      this.shopParams.pageSize = 6;
-    }
     this.loadProducts();
     this.loadBrands();
     this.loadTypes();
@@ -40,67 +31,87 @@ export class ShopComponent implements OnInit {
 
   //#region Functions
   loadProducts() {
-    this._shopServices.getAllProducts().subscribe(result => {
-      // console.log(result);
-      this.productList = result.data; // Respone sẽ có data là 1 list sản phẩm, đưa nó vào biến productList để đem đi chỗ khác lặp
-      // this.shopParams.pageIndex = result.pageIndex;
-      // this.shopParams.pageSize = result.pageSize; 
-      this.count = result.count
-      this.pageCount = result.pageCount
-    }, error => {
-      console.log(error)
-    });
+    this._shopServices.getAllProducts().subscribe(
+      (result) => {
+        this.productList = result.data;
+        this.count = result.count;
+        this.pageCount = result.pageCount;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   loadBrands() {
-    this._shopServices.getAllBrands().subscribe(result => {
-      this.listBrands = [{ id: 0, name: 'All', isActive: 1 }, ...result];
-      // console.log(result);
-    }, error => {
-      console.log(error)
-    });
+    this._shopServices.getAllBrands().subscribe(
+      (result) => {
+        this.listBrands = [{ id: 0, name: 'All', isActive: 1 }, ...result];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   loadTypes() {
-    this._shopServices.getAllTypes().subscribe(result => {
-      this.listTypes = [{ id: 0, name: 'All', isActive: 1 }, ...result];
-      // console.log(result);
-    }, error => {
-      console.log(error)
-    });
+    this._shopServices.getAllTypes().subscribe(
+      (result) => {
+        this.listTypes = [{ id: 0, name: 'All', isActive: 1 }, ...result];
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onBrandSelected(brandId: number) {
     this.shopParams.brandId = brandId;
+    this._shopServices.setShopRequest(this.shopParams);
     this.loadProducts();
   }
 
   onTypeSelected(typeId: number) {
     this.shopParams.typeId = typeId;
+    this._shopServices.setShopRequest(this.shopParams);
     this.loadProducts();
   }
 
   onSortSelected(sort: string) {
-    this.shopParams.sort = sort;
+    const params = this._shopServices.getShopRequest();
+    params.sort = sort;
+    this._shopServices.setShopRequest(params);
+    this.shopParams = { ...this.shopParams, ...params }
     this.loadProducts();
   }
 
   onPageChange(event: any) {
-    // if (this.shopParams.pageIndex !== event) {
-    //   this.shopParams.pageIndex = event.page
-    //   this.shopParams.pageSize = event.itemsPerPage
-    //   this.loadProducts();
-    // }
-    this.shopParams.pageIndex = event.page
-    this.shopParams.pageSize = event.itemsPerPage
+    const params = this._shopServices.getShopRequest();
+    params.pageIndex = event.page
+    params.pageSize = event.itemsPerPage
+    this._shopServices.setShopRequest(params);
+    this.shopParams = { ...this.shopParams, ...params }
     this.loadProducts();
   }
 
   onSearch(text: string) {
-    this.shopParams.searchText = text;
-    // this.shopParams.searchText = this.searchText.nativeElement.value; => Cách này cũng được
+    const params = this._shopServices.getShopRequest();
+    params.searchText = text;
+    this._shopServices.setShopRequest(params);
+    this.shopParams = { ...this.shopParams, ...params }
     this.loadProducts();
   }
+
+  onReset() {
+    if (this.searchText.nativeElement.value) {
+      this.searchText.nativeElement.value = '';
+    }
+    const params = new ShopRequest();
+    this._shopServices.setShopRequest(params);
+    this.shopParams = { ...this.shopParams, ...params }
+    this.loadProducts();
+  }
+
   onInputText(text: string) {
     this.textInput = text;
   }

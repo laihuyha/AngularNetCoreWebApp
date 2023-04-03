@@ -18,33 +18,31 @@ export class ShopService {
   types = new Map<number, Type>();
   pagination?: IPagination<IProduct>;
   shopRequest = new ShopRequest();
+  paginationCache = new Map();
 
   constructor(private http: HttpClient) { }
 
-  getAllProducts() {
-    let param = new HttpParams();
-    if (this.shopRequest.brandId) {
-      param = param.append('brandId', this.shopRequest.brandId.toString());
-    }
-    if (this.shopRequest.typeId) {
-      param = param.append('typeId', this.shopRequest.typeId.toString());
-    }
-    if (this.shopRequest.sort) {
-      param = param.append('sort', this.shopRequest.sort);
-    }
-    if (this.shopRequest.pageIndex) {
-      param = param.append('pageIndex', this.shopRequest.pageIndex.toString());
-    }
-    if (this.shopRequest.pageSize) {
-      param = param.append('pageSize', this.shopRequest.pageSize.toString());
-    }
-    if (this.shopRequest.searchText) {
-      param = param.append('searchText', this.shopRequest.searchText);
+  getAllProducts(useCache = true) {
+    if (!useCache) this.paginationCache = new Map();
+
+    if (this.paginationCache.size > 0 && useCache) {
+      if (this.paginationCache.has(Object.values(this.shopRequest).join('-'))) {
+        this.pagination = this.paginationCache.get(Object.values(this.shopRequest).join('-'));
+        if (this.pagination) return of(this.pagination);
+      }
     }
 
-    var products = this.http.get<IPagination<IProduct>>(this.baseUrl + 'Products/all', { observe: 'response', params: param });
+    let params = new HttpParams();
+    const { brandId, typeId, sort, pageIndex, pageSize, searchText } = this.shopRequest;
+    const requestParams = { brandId, typeId, sort, pageIndex, pageSize, searchText };
+    Object.entries(requestParams).forEach(([key, value]) => {
+      if (value) params = params.append(key, value.toString());
+    });
+
+    const products = this.http.get<IPagination<IProduct>>(this.baseUrl + 'Products/all', { observe: 'response', params });
     return products.pipe(
       map(response => {
+        this.paginationCache.set(Object.values(this.shopRequest).join('-'), response.body);
         response.body.data.forEach(product => {
           this.products.set(product.id, product);
         });
