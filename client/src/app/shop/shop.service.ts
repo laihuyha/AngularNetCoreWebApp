@@ -6,75 +6,85 @@ import { IPagination } from '../share/models/pagination';
 import { IProduct } from '../share/models/product';
 import { Type } from '../share/models/types';
 import { ShopRequest } from '../share/RequestParam/shopRequest';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = 'https://localhost:7102/api/';
-  products = new Map<number, IProduct>();
-  brands = new Map<number, Brand>();
-  types = new Map<number, Type>();
+  baseUrl = environment.apiUrl;
+  products: IProduct[] = [];
+  brands: Brand[] = [];
+  types: Type[] = [];
   pagination?: IPagination<IProduct>;
-  shopRequest = new ShopRequest();
-  paginationCache = new Map();
+  shopParams = new ShopRequest();
+  productCache = new Map<string, IPagination<IProduct>>();
 
   constructor(private http: HttpClient) { }
 
-  getAllProducts(useCache = true) {
-    if (!useCache) this.paginationCache = new Map();
+  getAllProducts(useCache = true): Observable<IPagination<IProduct>> {
 
-    if (this.paginationCache.size > 0 && useCache) {
-      if (this.paginationCache.has(Object.values(this.shopRequest).join('-'))) {
-        this.pagination = this.paginationCache.get(Object.values(this.shopRequest).join('-'));
+    if (!useCache) this.productCache = new Map();
+
+    console.log('productCache', this.productCache)
+    
+    if (this.productCache.size > 0 && useCache) {
+      if (this.productCache.has(Object.values(this.shopParams).join('-'))) {
+        this.pagination = this.productCache.get(Object.values(this.shopParams).join('-'));
         if (this.pagination) return of(this.pagination);
       }
     }
 
     let params = new HttpParams();
-    const { brandId, typeId, sort, pageIndex, pageSize, searchText } = this.shopRequest;
+    const { brandId, typeId, sort, pageIndex, pageSize, searchText } = this.shopParams;
     const requestParams = { brandId, typeId, sort, pageIndex, pageSize, searchText };
     Object.entries(requestParams).forEach(([key, value]) => {
       if (value) params = params.append(key, value.toString());
     });
 
-    const products = this.http.get<IPagination<IProduct>>(this.baseUrl + 'Products/all', { observe: 'response', params });
-    return products.pipe(
+
+    return this.http.get<IPagination<IProduct>>(this.baseUrl + 'products/all', { params }).pipe(
       map(response => {
-        this.paginationCache.set(Object.values(this.shopRequest).join('-'), response.body);
-        response.body.data.forEach(product => {
-          this.products.set(product.id, product);
-        });
-        this.pagination = response.body;
-        return response.body;
+        this.productCache.set(Object.values(this.shopParams).join('-'), response)
+        this.pagination = response;
+        return response;
       })
-    );
+    )
   }
 
-  setShopRequest(request: ShopRequest) {
-    this.shopRequest = request;
+  setShopRequest(params: ShopRequest) {
+    this.shopParams = params;
   }
 
   getShopRequest() {
-    return this.shopRequest;
-  }
-
-  getAllBrands() {
-    const brands = this.brands.size > 0 ? of(Array.from(this.brands.values())) : this.http.get<Brand[]>(this.baseUrl + 'Products/brands');
-    return brands;
-  }
-
-  getAllTypes() {
-    const types = this.types.size > 0 ? of(Array.from(this.types.values())) : this.http.get<Type[]>(this.baseUrl + 'Products/types');
-    return types;
+    return this.shopParams;
   }
 
   getProduct(id: number) {
-    const product = this.products.get(id);
-    if (!product) {
-      return this.http.get<IProduct>(this.baseUrl + 'Products/product/' + id);
-    }
-    return of(product);
+    const product = [...this.productCache.values()]
+      .reduce((acc, paginatedResult) => {
+        return { ...acc, ...paginatedResult.data.find(x => x.id === id) }
+      }, {} as IProduct)
+
+    if (Object.keys(product).length !== 0) return of(product);
+
+    return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
+  }
+
+  getAllBrands() {
+    if (this.brands.length > 0) return of(this.brands);
+
+    return this.http.get<Brand[]>(this.baseUrl + 'products/brands').pipe(
+      map(brands => this.brands = brands)
+    );
+  }
+
+  getAllTypes() {
+    if (this.types.length > 0) return of(this.types);
+
+    return this.http.get<Type[]>(this.baseUrl + 'products/types').pipe(
+      map(types => this.types = types)
+    );
   }
 }

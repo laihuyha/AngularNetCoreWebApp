@@ -78,6 +78,7 @@
         <app-pager-component
           [count]="this.count"
           [pageSize]="this.shopParams.pageSize"
+          [currentPage]="this.shopParams.pageIndex"
           (pageChanged)="onPageChange($event)"
           class="ml-3"
         ></app-pager-component>

@@ -19,7 +19,7 @@ export class ShopComponent implements OnInit {
   count: number;
   pageCount: number;
   textInput: string;
-  shopParams = { ...this._shopServices.getShopRequest(), pageIndex: 1, pageSize: 6 };
+  shopParams = this._shopServices.getShopRequest();
 
   constructor(private _shopServices: ShopService) { }
 
@@ -106,9 +106,8 @@ export class ShopComponent implements OnInit {
     if (this.searchText.nativeElement.value) {
       this.searchText.nativeElement.value = '';
     }
-    const params = new ShopRequest();
-    this._shopServices.setShopRequest(params);
-    this.shopParams = { ...this.shopParams, ...params }
+    this.shopParams = new ShopRequest();
+    this._shopServices.setShopRequest(this.shopParams);
     this.loadProducts();
   }
 
