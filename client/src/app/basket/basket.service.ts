@@ -106,7 +106,7 @@ export class BasketService {
   decrementItemQuantity(item: ICartItem) {
     const cart = this.getCurrentCart();
     const foundItemIndex = cart.items.findIndex(x => x.id === item.id);
-    if (foundItemIndex != 1 && cart.items[foundItemIndex].quantity > 1) {
+    if (foundItemIndex !== -1 && cart.items[foundItemIndex].quantity > 1) {
       cart.items[foundItemIndex].quantity--;
       this.setCart(cart);
     } else {
