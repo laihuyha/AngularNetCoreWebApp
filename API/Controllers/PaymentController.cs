@@ -9,16 +9,21 @@ using System.IO;
 using Stripe;
 using Core.Models.Entities.OrderAggregate;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Controllers
 {
     public class PaymentController : BaseApiController
     {
-        private const string _WhSecret = Constants.WhKey;
+        // private const string _WhSecret = Constants.WhKey;
+        private readonly string _WhSecret;
         private readonly IPaymentServices _paymentServices;
-        public PaymentController(IPaymentServices paymentServices)
+        private readonly IConfiguration _configuration;
+        public PaymentController(IPaymentServices paymentServices, IConfiguration configuration)
         {
+            _configuration = configuration;
             _paymentServices = paymentServices;
+            _WhSecret = _configuration.GetSection("StripeSettings:WhSecretKey").Value;
         }
 
         [Authorize]

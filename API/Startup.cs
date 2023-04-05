@@ -76,11 +76,13 @@ namespace API
             // Cấu hình Db Entity Framework
             services.AddDbContext<ShopContext>(options =>
             {
-                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
+                // options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")); // Old
+                options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
             });
             // Cấu hình Db Identity
             services.AddDbContext<AppIdentityDbContext>(
-                options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"))
+                // options => options.UseSqlite(_configuration.GetConnectionString("IdentityConnection")) //Old
+                options => options.UseNpgsql(_configuration.GetConnectionString("IdentityConnection"))
             );
             #endregion
         }

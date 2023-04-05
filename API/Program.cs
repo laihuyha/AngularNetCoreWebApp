@@ -29,7 +29,7 @@ namespace API
                     await context.Database.MigrateAsync();
                     await identityContext.Database.MigrateAsync();
 
-                    //Seed data to the database.
+                    // Seed data to the database.
                     // await ShopContextSeed.SeedAsync(context, loggerFactory);
                     // await IdentitySeed.SeedAsync(userManager, loggerFactory);
                     
