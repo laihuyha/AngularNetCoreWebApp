@@ -30,8 +30,8 @@ namespace API
                     await identityContext.Database.MigrateAsync();
 
                     // Seed data to the database.
-                    // await ShopContextSeed.SeedAsync(context, loggerFactory);
-                    // await IdentitySeed.SeedAsync(userManager, loggerFactory);
+                    await ShopContextSeed.SeedAsync(context, loggerFactory);
+                    await IdentitySeed.SeedAsync(userManager, loggerFactory);
                     
                     context.Database.EnsureCreated();
                     identityContext.Database.EnsureCreated();

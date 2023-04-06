@@ -21,3 +21,4 @@ appsettings.Development.json
 # *.db
 *.db
 *.rdb
+publish/*

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Core.Models.Entities;
@@ -14,12 +15,13 @@ namespace Infrastructure.Data
     {
         public static async Task SeedAsync(ShopContext context, ILoggerFactory _loggerFactory)
         {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
                 if (!context.ProductBrands.Any())
                 {
                     //Brand seed
-                    var BrandData = File.ReadAllText("../Infrastructure/SeedData/brands.json");
+                    var BrandData = File.ReadAllText(path + @"/SeedData/brands.json");
                     var Brands = JsonSerializer.Deserialize<List<ProductBrand>>(BrandData);
                     foreach (var brand in Brands)
                     {
@@ -31,7 +33,7 @@ namespace Infrastructure.Data
                 if (!context.ProductTypes.Any())
                 {
                     //Category seed
-                    var CategoryData = File.ReadAllText("../Infrastructure/SeedData/types.json");
+                    var CategoryData = File.ReadAllText(path + @"/SeedData/types.json");
                     var Types = JsonSerializer.Deserialize<List<ProductType>>(CategoryData);
                     foreach (var type in Types)
                     {
@@ -43,7 +45,7 @@ namespace Infrastructure.Data
                 if (!context.Products.Any())
                 {
                     //Product seed
-                    var ProductData = File.ReadAllText("../Infrastructure/SeedData/products.json");
+                    var ProductData = File.ReadAllText(path + @"/SeedData/products.json");
                     var Products = JsonSerializer.Deserialize<List<Product>>(ProductData);
                     foreach (var product in Products)
                     {
@@ -55,7 +57,7 @@ namespace Infrastructure.Data
                 if (!context.DeliveryMethods.Any())
                 {
                     //Product seed
-                    var Data = File.ReadAllText("../Infrastructure/SeedData/delivery.json");
+                    var Data = File.ReadAllText(path + @"/SeedData/delivery.json");
                     var DeliveryMethodData = JsonSerializer.Deserialize<List<DeliveryMethod>>(Data);
                     foreach (var methods in DeliveryMethodData)
                     {
