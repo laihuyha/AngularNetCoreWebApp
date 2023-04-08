@@ -61,8 +61,15 @@ namespace API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"); // Cho phép tất cả các request từ domain này
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+                    // policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"); // Cho phép tất cả các request từ domain này
+                    // policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+
+                    //For Publish
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://178.128.56.163/");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://178.128.56.163/");
+                    // // policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5000");
+                    // // policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5001");
+                    // policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
 
