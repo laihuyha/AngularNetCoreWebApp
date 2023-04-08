@@ -23,7 +23,6 @@ namespace API.Helpers
             CreateMap<AddressDto, Address>().ReverseMap(); // This Address is Enitity different from Address of Identity which is using in AddressDto's method (Map)
             CreateMap<Order, ResOrderDTO>()
                 .ForMember(d => d.ShipType, o => o.MapFrom(s => s.ShipType.ShortName))
-                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
                 .ForMember(d=>d.ShippingPrice, o => o.MapFrom(s => s.ShipType.Cost));
             CreateMap<OrderItem, OrderItemDTO>()
                 .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ItemId))

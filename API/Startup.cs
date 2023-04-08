@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using API.Extensions;
 using API.Helpers;
@@ -97,6 +98,10 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Fix .NET6 and DateTime problem. Cannot write DateTime with Kind=UTC to PostgreSQL type 'timestamp without time zone'
+            // Details: https://stackoverflow.com/questions/69961449/net6-and-datetime-problem-cannot-write-datetime-with-kind-utc-to-postgresql-ty
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                        
             // Cấu hình Middleware cho request lỗi
             app.UseMiddleware<ExceptionMiddleware>();
             if (env.IsDevelopment())
