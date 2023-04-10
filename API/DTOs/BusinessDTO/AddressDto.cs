@@ -19,6 +19,7 @@ namespace API.DTOs.BusinessDTO
 
         public AddressDto Map(Address address)
         {
+            if(address == null) return new AddressDto();
             return new AddressDto
             {
                 FirstName = address.FirstName,
